@@ -1,15 +1,18 @@
 {% extends "master.html" %}
 
 {% block title %}
-  My Quiz App
+  Quiz App Home Screen
 {% endblock %}
 
-
 {% block content %}
-<h1>My Quiz App</h1>
+<div class="mycard2">
+    <h1>Company Quiz App</h1>
 
-<h3>Users</h3>
+    <ul>
+        <li onclick="window.location = 'login/'"> LOG-IN </li>
+        <li onclick="window.location = 'allUsers/'"> REGISTER </li>
 
-<p>Check out all our <a href="allUsers/">users</a>!</p>
-
+    </ul>
+    
+</div>
 {% endblock %}

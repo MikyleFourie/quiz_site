@@ -1,19 +1,17 @@
 {% extends "master.html" %}
 
 {% block title %}
-    userProfiles - List of all users
+  userProfiles - List of all users
 {% endblock %}
 
+
 {% block content %}
-
-<p><a href="/">HOME</a></p>
-
-<h1>Users</h1>
-
-<ul>
-    {% for x in myusers %}
-    <li><a href="details/{{ x.id }}">{{ x.firstname }} {{ x.lastname }}</a></li>
-    {% endfor %}
-</ul>
-
+<div class="mycard">
+    <h1>Users</h1>
+    <ul>
+        {% for x in myusers %}
+        <li onclick="window.location = 'details/{{ x.id }}'">{{ x.firstname }} {{ x.lastname }}</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

@@ -1,10 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- recall that <head> is for metadata and does not display at all -->
+    <link rel="stylesheet" href="{% static 'myglobal.css' %}">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+
+    <div class="topnav">
+        <a href="/">HOME</a> |
+        <a href="/allUsers/">USERS</a>
+    </div>
 
     {% block content %}
     {% endblock %}
