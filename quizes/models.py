@@ -4,46 +4,44 @@ from django.db import models
 
 class Quiz(models.Model):
     QuizType = models.CharField(max_length=50)
+    def __str__(self) -> str:
+        return self.QuizType
+
 
 class Question(models.Model):
-    QuestionType= models.IntegerField()
-    quiztype = models.ForeignKey(Quiz)
+    quiz = models.ForeignKey(
+        Quiz,
+        on_delete=models.PROTECT,
+        blank=False
+    )
     question = models.CharField(max_length=200)
-    #use choices??
 
-    
+    def __str__(self):
+        return self.question
+
 class Answer(models.Model):
-    answer = models.TextChoices
-    #use choices??
+   question = models.ForeignKey(
+       Question, 
+       on_delete=models.PROTECT, 
+       blank = False)
+  
+   answer = models.CharField(max_length=200)
+   iscorrect = models.BooleanField(default=False)
 
-class AnswersToQuestion(models.Model):
-    answer = models.ForeignKey(Answer)
-    question = models.ForeignKey(Question)
+   def __str__(self) -> str:
+       return self.answer
+   
 
-class Response(models.Model):
-    #updated real time with each response 
-    quiz_id = models.ForeignKey(Quiz)
-    question_id = models.ForeignKey(Question)
-    response = models.CharField(max_length=100) #how to check if response matches answer to question set....
-    isCorrect = models.BooleanField() #depends on if response answer matches the correct answer
+'''
+def answer_options(self):
+        answer_options = list(Answer.objects.filter(question=self))
 
+        empty = []
 
-#put the following classes in user app
-
-class User(models.Model):
-    name = models.CharField(max_length=100)
-    surname = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    #password field...hashfunction stuff goes here...
-    games_played = models.IntegerField(null=True)
-
-class GameSessions(models.Model):
-    user_id = models.ForeignKey(User)
-    quiz_id = models.ForeignKey(Quiz)
-    date_time = models.DateTimeField()
-    score = models.IntegerField(null=True)
-    totalTime = models.TimeField()
-
-
-#put following classes in Admin app
-
+        for option in answer_options:
+            empty.append({
+                'answer': answer_options.answer,
+                'iscorrect': answer_options.iscorrect
+            })
+        return empty
+'''

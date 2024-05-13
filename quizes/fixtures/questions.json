@@ -1,0 +1,19 @@
+[
+    {
+        "model":"quizes.Question",
+        "pk":1,
+        "fields": {
+            "quiz": 1,
+            "question":"What is the capital of rwanda?"
+        }
+    },
+
+    {
+        "model":"quizes.Question",
+        "pk":2,
+        "fields": {
+            "quiz": 2,
+            "question":"How many planets in the solar system?"
+        }
+    }
+]
