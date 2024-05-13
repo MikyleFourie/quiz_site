@@ -30,7 +30,9 @@ class Answer(models.Model):
 
    def __str__(self) -> str:
        return self.answer
-   
+
+
+
 
 '''
 def answer_options(self):
