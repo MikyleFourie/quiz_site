@@ -3,7 +3,7 @@
         "model":"quizes.Quiz",
         "pk":1,
         "fields": {
-            "QuizType": "General Knowledge"
+            "QuizType": "Science"
         }
     },
 
