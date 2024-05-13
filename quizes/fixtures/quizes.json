@@ -1,0 +1,17 @@
+[
+    {
+        "model":"quizes.Quiz",
+        "pk":1,
+        "fields": {
+            "QuizType": "Science"
+        }
+    },
+
+    {
+        "model":"quizes.Quiz",
+        "pk":2,
+        "fields": {
+            "QuizType": "Art"
+        }
+    }
+]
