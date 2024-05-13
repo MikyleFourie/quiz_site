@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+
+body {
+    height: 100vh;
+    margin: 0;
+    font: 600 18px 'Source Sans Pro', sans-serif;
+    letter-spacing: 0.64px;
+    color: #585d74;
+}
+
+.topnav {
+    width: 100vw;
+    background-color: #375BDC;
+    color: #ffffff;
+    padding-left: 10px;
+}
+
+    .topnav a:link, .topnav a:visited {
+        text-decoration: none;
+        color: #ffffff;
+    }
+
+    .topnav a:hover, .topnav a:active {
+        text-decoration: underline;
+    }
+
+span {
+    font-size: smaller;
+}
+
+.mycard {
+    background-color: #f1f1f1;
+    background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
+    background-size: 100% 120px;
+    background-repeat: no-repeat;
+    margin: 40px auto;
+    height: 70%;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    padding: 20px;
+}
+
+    .mycard h1 {
+        text-align: center;
+        color: #ffffff;
+        margin: 20px 0 60px 0;
+    }
+
+    .mycard ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    }
+
+    .mycard li {
+    background-color: #ffffff;
+    background-image: linear-gradient(to right, #375BDC, #4D70EF);
+    background-size: 50px 60px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform .25s;
+    border-radius: 5px;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    padding: 15px;
+    padding-left: 70px;
+    margin-top: 5px;
+    text-align: center;
+    }
+
+    li:hover {
+        transform: scale(1.1);
+    }
+
+a:link, a:visited {
+    color: #375BDC;
+}
+
+.main, .main h1 {
+    text-align: center;
+    color: #375BDC;
+}
+
+
+.mycard2 {
+    background-color: #f1f1f1;
+    background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
+    background-size: 100% 120px;
+    background-repeat: no-repeat;
+    margin: 40px auto;
+    height: 70%;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    padding: 20px;
+}
+
+    .mycard2 h1 {
+        text-align: center;
+        color: #ffffff;
+        margin: 20px 0 60px 0;
+    }
+
+    .mycard2 h2 {
+        text-align: center;
+        margin: 20px 0 60px 0;
+        color: #375BDC;
+    }
+
+    .mycard2 body {
+        text-align: center;
+    }
+
+    .mycard2 ul{
+        border-radius: 5px;
+    }
+
+    .mycard2 li {
+        font-size: 2em;
+        color: #375BDC;
+        text-align: center;
+        cursor: pointer;
+        transition: transform .25s;
+        border-radius: 5px;
+        padding: 15px;
+        margin-top: 5px;
+    }
+
+    #login {
+        display: inline-flex;
+        align-content: stretch;
+        color: #375BDC;
+        text-align: center;
+        cursor: pointer;
+        transform:none;
+        transition:none;
+        border-radius: 5px;
+        padding: 15px;
+        margin-top: 5px;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+.mycard2 input {
+    width: 100%;
+    height: 80%;
+    font-size: 0.75em;
+}
+
+    
+
+    .mycard2 ul {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: stretch;
+        flex-direction: column;
+        background-color: white;
+        height: 70%;
+        width: 70%;
+        list-style-type: none;
+        padding: 0;
+        margin: auto;
+    }
+
+.regCard {
+    background-color: #f1f1f1;
+    background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
+    background-size: 100% 120px;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 5px;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+}
+
+    
+    .regCard label{
+        padding: 25px 0px 0px 0px;
+
+    }
+    .regCard h1 {
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 2.5em;
+        text-align: left;
+        color: #ffffff;
+        margin: 0;
+    }
+
+    .regCard form{
+        padding-left: 40px;
+        padding-right: 40px;
+        display:flex;
+        flex-direction: column;
+    }
+
+    .regCard button{
+        margin: 20px 0px 20px 0px;
+        width: 60%;
+        align-self: center;
+    }
+
+    .errorlist li {
+        color: red;
+        transition: none;
+        transform: none;
+    }
+
+
+    .helptext li{
+        transition: none;
+        transform: none;
+    }

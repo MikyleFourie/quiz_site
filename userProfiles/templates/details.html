@@ -1,0 +1,13 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Details about {{ myusers.firstname }} {{ myusers.lastname }}
+{% endblock %}
+
+{% block content %}
+<div class="mycard">
+    <h1>{{ myusers.firstname }} {{ myusers.lastname }}</h1>
+    <p>Phone {{ myusers.phone }}</p>
+    <p>Member since: {{ myusers.joined_date }}</p>
+</div>
+{% endblock %}  
