@@ -1,8 +1,10 @@
 from re import template
 from django import http
-from django.shortcuts import render
+import django
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth.forms import UserCreationForm
 
 import userProfiles
 from .models import Users
@@ -34,15 +36,23 @@ def login(request):
     template = loader.get_template('login.html')
     return HttpResponse(template.render())
 
-def testing(request):
-  myUsersList = Users.objects.all().values()
-  template = loader.get_template('template.html')
-  #context = {
-   #   'myUsers': myUsersList,
-   #   }
-  context = {
-      'fruits': ['Apple', 'Cherry', 'Grapes']
-      }
-  
-  return HttpResponse(template.render(context, request))
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            template = loader.get_template('quizSelection.html')
+            return HttpResponse(template.render())
+        
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {"form": form})
 
+def testing(request):
+  template = loader.get_template('test.html')
+    
+  return HttpResponse(template.render())
+
+def qSelect(request):
+    template = loader.get_template('quizSelection.html')
+    return HttpResponse(template.render())

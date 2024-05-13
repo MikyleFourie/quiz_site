@@ -3,13 +3,24 @@
 <html>
 <head>
     <link rel="stylesheet" href="{% static 'myglobal.css' %}">
+    
     <title>{% block title %}{% endblock %}</title>
+{% comment %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+{% endcomment %}
 </head>
 <body>
 
     <div class="topnav">
+
         <a href="/">HOME</a> |
-        <a href="/allUsers/">USERS</a>
+        <a href="/register/">REGISTER</a> |
+        <a href="/login/">LOG-IN</a> |
+        <a href="/qSelect/">QUIZ SELECT</a> |
+
+
     </div>
 
     {% block content %}

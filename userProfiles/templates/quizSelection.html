@@ -1,0 +1,28 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Screen to select a Quiz
+{% endblock %}
+
+
+{% block content %}
+<div class="mycard">
+    <h1>Select a Quiz!</h1>
+    
+    <!-- in future it would look something like this
+    <ul>
+        {% for x in quizList %}
+        <li onclick="window.location = //locationofplay">{{ x.category }}</li>
+        {% endfor %}
+    </ul>
+
+     but for now...:   -->
+
+<ul>
+    <li onclick="window.location = '/'">Company Quiz</li>
+    <li onclick="window.location = ''">General Knowledge Quiz</li>
+    <li onclick="window.location = ''">Science Quiz</li>
+    <li onclick="window.location = ''">Geography Quiz</li>
+</ul>
+</div>
+{% endblock %}

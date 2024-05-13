@@ -104,17 +104,20 @@ a:link, a:visited {
         text-align: center;
     }
 
+    .mycard2 ul{
+        border-radius: 5px;
+    }
+
     .mycard2 li {
-        color: #375BDC;
+        font-size: 2em;
+        color: red;
         text-align: center;
         cursor: pointer;
         transition: transform .25s;
         border-radius: 5px;
         padding: 15px;
         margin-top: 5px;
-
         height: stretch;
-
     }
 
     #login {
@@ -133,7 +136,7 @@ a:link, a:visited {
     }
 
 .mycard2 input {
-    width: -webkit-fill-available;
+    width: 100%;
 }
 
     
