@@ -1,4 +1,4 @@
-from django.db import models
+'''from django.db import models
 
 #figure out which models/databases are many-to-one or one-to-one etc....
 
@@ -45,5 +45,5 @@ class GameSessions(models.Model):
     totalTime = models.TimeField()
 
 
-#put following classes in Admin app
+#put following classes in Admin app '''
 
