@@ -7,12 +7,23 @@ class Quiz(models.Model):
     def __str__(self) -> str:
         return self.QuizType
 
+class QuestionType(models.Model):
+    q_type = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.q_type
 
 class Question(models.Model):
     quiz = models.ForeignKey(
         Quiz,
         on_delete=models.PROTECT,
         blank=False
+    )
+
+    question_type = models.ForeignKey(
+        QuestionType,
+        on_delete=models.PROTECT,
+        blank = False
     )
     question = models.CharField(max_length=200)
 
@@ -44,4 +55,19 @@ def answer_options(self):
                 'iscorrect': answer_options.iscorrect
             })
         return empty
+
+
+
+ q_type = models.ForeignKey(
+        QuestionType,
+        on_delete=models.PROTECT,
+        blank = False
+    )
+
+    class QuestionType(models.Model):
+    q_type = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.q_type
+
 '''

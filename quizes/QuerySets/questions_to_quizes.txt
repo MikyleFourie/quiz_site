@@ -1,0 +1,9 @@
+-- database: c:\Users\ivych\OneDrive - University of Witwatersrand\WITS COURSES 2024\ELEN3020\webapp\quiz_site\db.sqlite3
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+SELECT * FROM quizes_question WHERE quiz_id = 1;
+
+SELECT * FROM quizes_question WHERE quiz_id = 2;
+
+SELECT * FROM quizes_question WHERE quiz_id = 3;
