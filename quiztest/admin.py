@@ -29,10 +29,14 @@ class QuestionAdmin(admin.ModelAdmin):
     fields = [
         'title',
         'quiz',
+        'difficulty',
+        'typeOfQ',
     ]
     list_display = [
         'title',
         'quiz',
+        'difficulty',
+        'typeOfQ',
         #'date_updated',
     ]
     inlines = [

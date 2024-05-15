@@ -51,21 +51,21 @@ class Question(Updated):
 
     TYPE = (
         (0, _('Multiple Choice')),
-        (0, _('True or False')),
-        (0, _('Text Input')),
+        (1, _('True or False')),
+        #(2, _('Text Input')),
     )
 
     quiz = models.ForeignKey(
         Quizzes, related_name='question', on_delete=models.DO_NOTHING)
-    technique = models.IntegerField(
+    typeOfQ = models.IntegerField(
         choices=TYPE, default=0, verbose_name=_("Type of Question"))
     title = models.CharField(max_length=255, verbose_name=_("Title"), default ='')
     difficulty = models.IntegerField(
         choices=SCALE, default=0, verbose_name=_("Difficulty"))
-   # date_created = models.DateTimeField(
+    #date_created = models.DateTimeField(
         #auto_now_add=True, verbose_name=_("Date Created"), default='timezone.now')
-    is_active = models.BooleanField(
-        default=False, verbose_name=_("Active Status"))
+    #is_active = models.BooleanField(
+        #default=False, verbose_name=_("Active Status"))
 
     def __str__(self):
         return self.title

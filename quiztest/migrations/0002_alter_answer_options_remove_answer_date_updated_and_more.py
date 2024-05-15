@@ -35,6 +35,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='question',
             name='technique',
-            field=models.IntegerField(choices=[(0, 'Multiple Choice'), (0, 'True or False'), (0, 'Text Input')], default=0, verbose_name='Type of Question'),
+            field=models.IntegerField(choices=[(0, 'Multiple Choice'), (1, 'True or False'), (2, 'Text Input')], default=0, verbose_name='Type of Question'),
         ),
     ]
