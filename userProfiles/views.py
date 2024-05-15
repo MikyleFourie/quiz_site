@@ -14,7 +14,7 @@ from .models import Users
 def view1(request):
     
     myusers = Users.objects.all().values()
-    template = loader.get_template('all_users.html')
+    template = loader.get_template('userProfiles/all_users.html')
     context = {
         'myusers': myusers,
         }
@@ -23,18 +23,18 @@ def view1(request):
 
 def details(request, id):
     myusers = Users.objects.get(id=id)
-    template = loader.get_template('details.html')
+    template = loader.get_template('userProfiles/details.html')
     context = {
         'myusers': myusers,
         }
     return HttpResponse(template.render(context, request))
 
 def main(request):
-    template = loader.get_template('main.html')
+    template = loader.get_template('userProfiles/main.html')
     return HttpResponse(template.render())
 
 def login(request):
-    template = loader.get_template('login.html')
+    template = loader.get_template('userProfiles/login.html')
     return HttpResponse(template.render())
 
 def register(request):
@@ -42,18 +42,21 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            template = loader.get_template('quizSelection.html')
+            template = loader.get_template('userProfiles/quizSelection.html')
             return HttpResponse(template.render())
         
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {"form": form})
 
+def register2(request):
+    template = loader.get_template('accounts/signup.html')
+    return HttpResponse(template.render())
 
 def testing(request):
-    template = loader.get_template('userProfiles/page.html')
+    template = loader.get_template('userProfiles/test.html')
     return HttpResponse(template.render())
 
 def qSelect(request):
-    template = loader.get_template('quizSelection.html')
+    template = loader.get_template('userProfiles/quizSelection.html')
     return HttpResponse(template.render())

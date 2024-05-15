@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\quiz_site",
-    "\\userProfiles",
-    "\\userProfiles\\templates"
+    "\\templates",
+    "\\templates\\accounts",
+    "\\templates\\userProfiles",
+    "\\userProfiles"
   ],
   "SelectedNode": "\\userProfiles\\views.py",
   "PreviewInSolutionExplorer": false

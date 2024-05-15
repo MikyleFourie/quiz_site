@@ -79,7 +79,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # 'DIRS': [], 
-        'DIRS': [str(BASE_DIR.joinpath('templates'))], # new
+         'DIRS': [str(BASE_DIR.joinpath('templates'))], # new
+        # 'DIRS': [os.path.join(BASE_DIR / 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -180,3 +181,7 @@ ACCOUNT_AUTHENTICATION_METHOD="username_email"
 #ACCOUNT_EMAIL_VERIFICATION="mandatory"
 ACCOUNT_CONFIRM_EMAIL_ON_GET =True
 
+
+#Idk if these additions work for rerouting
+LOGIN_REDIRECT_URL = '/qSelect'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
