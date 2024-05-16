@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'myglobal.css' %}">
+    
+    <title>{% block title %}{% endblock %}</title>
+{% comment %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+{% endcomment %}
+</head>
+<body>
+
+    <div class="topnav">
+
+        <a id="first" href="/">HOME</a> |
+        <a href="/accounts/signup/">REGISTER</a> |
+        <a href="/accounts/login/">LOG-IN</a> |
+        <a href="/accounts/logout/">LOG-OUT</a> |
+        <a href="/qSelect/">QUIZ SELECT</a> |
+        <a href="/admin/">ADMIN</a> |
+
+
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
