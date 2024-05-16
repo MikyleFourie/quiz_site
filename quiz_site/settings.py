@@ -26,7 +26,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,6 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    'quizes',
+    'TestingApp',
     'quiztest',
     'rest_framework',
 ]
@@ -48,6 +65,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #allauth
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'quiz_site.urls'
@@ -63,10 +82,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'quiz_site.wsgi.application'
 
@@ -79,6 +102,24 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+SOCIALACCOUNT_PROVIDERS = {
+    'github':{
+
+        'APP': {
+            'client_id': 'Ov23lit8Kp12dQZZsUqO',
+            'secret': 'c734357f06f6819081d035ff43a5f1fe2a13054e',
+        },
+        "VERIFIED_EMAIL": True
+
+    },
+    'google':{
+        'APP': {
+            'client_id': '490286722574-423l5p2hc0hdfgmphe4gmlntqn89lcv6.apps.googleusercontent.com',
+            'secret': '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',
+        },
+        "VERIFIED_EMAIL": True
+        }
 }
 
 
@@ -122,3 +163,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#allAuth Settings:
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_AUTHENTICATION_METHOD="username_email"
+#ACCOUNT_EMAIL_VERIFICATION="mandatory"
+ACCOUNT_CONFIRM_EMAIL_ON_GET =True
+
