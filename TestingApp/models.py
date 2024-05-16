@@ -2,7 +2,7 @@ from django.apps import apps
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sessions import base_session
-from quizes.models import Quiz
+from quiztest.models import Quizzes
 
 #tables for users
 
@@ -14,7 +14,7 @@ class GameSession(models.Model):
         blank=False) #sort out this user thing.....ok update...it's kinda working
     
     quiz = models.ForeignKey(
-        Quiz,
+        Quizzes,
         on_delete=models.PROTECT,
         blank=False  ) #this is working
     

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from TestingApp.models import GameSession
 
 @admin.register(models.Category)
 
@@ -50,4 +51,15 @@ class AnswerAdmin(admin.ModelAdmin):
         'answer_text',
         'is_right',
         'question',
+    ]
+
+@admin.register(GameSession) 
+
+class GameSessionAdmin(admin.ModelAdmin):
+    list_display = [
+        'user',
+        'quiz',
+        'datetime',
+        'score',
+        'totalTime'
     ]
