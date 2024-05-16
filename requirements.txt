@@ -1,4 +1,4 @@
-django>=5.0
+django==4.2.13
 whitenoise[brotli]>=6,<7
 django-allauth[socialaccount]
 gunicorn>=22,<23
