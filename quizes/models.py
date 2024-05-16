@@ -25,6 +25,7 @@ class Question(models.Model):
         on_delete=models.PROTECT,
         blank = False
     )
+    
     question = models.CharField(max_length=200)
 
     def __str__(self):
