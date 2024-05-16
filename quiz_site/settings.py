@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v
 #can set to false to turn off debugger and get default 404 page
 #seems like False also makes the admin screen break
 #CSS won't show (by default) if debug is false 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
