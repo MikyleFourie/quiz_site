@@ -1,4 +1,4 @@
-django==4.2.13
+django=>5
 whitenoise[brotli]>=6,<7
 django-allauth[socialaccount]
 gunicorn>=22,<23
@@ -12,5 +12,5 @@ requests
 # underlying Heroku stack image are picked up automatically, thanks to dynamic linking.
 # On other platforms/in development, the precompiled binary package is used instead, to
 # speed up installation and avoid errors from missing libraries/headers.
-psycopg[c]; sys_platform == "linux"
-psycopg[binary]; sys_platform != "linux"
+#psycopg[c]; sys_platform == "linux"
+#psycopg[binary]; sys_platform != "linux"
