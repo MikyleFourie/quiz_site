@@ -178,8 +178,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #allAuth Settings:
 ACCOUNT_EMAIL_REQUIRED=True
 ACCOUNT_AUTHENTICATION_METHOD="username_email"
-#ACCOUNT_EMAIL_VERIFICATION="mandatory"
-ACCOUNT_CONFIRM_EMAIL_ON_GET =True
+ACCOUNT_EMAIL_VERIFICATION="none"
+ACCOUNT_CONFIRM_EMAIL_ON_GET =False
 
 
 #Idk if these additions work for rerouting
