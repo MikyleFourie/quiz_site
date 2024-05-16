@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from allauth.socialaccount.forms import SignupForm
 
 import userProfiles
@@ -60,3 +61,9 @@ def testing(request):
 def qSelect(request):
     template = loader.get_template('userProfiles/quizSelection.html')
     return HttpResponse(template.render())
+
+def quiz(request):
+    template = loader.get_template('userProfiles/quiz.html')
+    return HttpResponse(template.render())
+    
+    

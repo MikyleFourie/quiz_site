@@ -3,10 +3,11 @@
     "",
     "\\quiz_site",
     "\\templates",
-    "\\templates\\accounts",
+    "\\templates\\account",
+    "\\templates\\socialaccount",
     "\\templates\\userProfiles",
     "\\userProfiles"
   ],
-  "SelectedNode": "\\userProfiles\\views.py",
+  "SelectedNode": "\\userProfiles\\urls.py",
   "PreviewInSolutionExplorer": false
 }

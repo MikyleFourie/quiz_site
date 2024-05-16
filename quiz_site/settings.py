@@ -183,5 +183,5 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET =True
 
 
 #Idk if these additions work for rerouting
-LOGIN_REDIRECT_URL = '/qSelect'
+LOGIN_REDIRECT_URL = '/qSelect/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
