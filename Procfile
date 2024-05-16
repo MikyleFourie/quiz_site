@@ -1,2 +1,2 @@
 release: python manage.py migrate 
-web: gunicorn my_django_application.wsgi — log-file -
+web: gunicorn quiz_site.wsgi — log-file -
