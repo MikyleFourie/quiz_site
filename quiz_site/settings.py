@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
-    'quizes',
+    #'quizes',
     'TestingApp',
     'quiztest',
     'rest_framework',
@@ -108,17 +108,10 @@ WSGI_APPLICATION = 'quiz_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-<<<<<<< Updated upstream
-        'NAME': 'quiz_game_database',
-        'USER': 'ivych',
-        'PASSWORD': 'ivych1!',
-        'HOST': 'postgres://ubjg99a8qcmm7o:pe699a3bafb5874698abe70862bbefe5eb2437a608aa3ceb4cf801827d3c454b8@cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d6f26nemgdgsoj',
-=======
         'NAME': 'd6f26nemgdgsoj',
         'USER': 'ubjg99a8qcmm7o',
         'PASSWORD': 'pe699a3bafb5874698abe70862bbefe5eb2437a608aa3ceb4cf801827d3c454b8!',
         'HOST': 'cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
->>>>>>> Stashed changes
         'PORT': '5432',
     }
 }
