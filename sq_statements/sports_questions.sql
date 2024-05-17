@@ -32,67 +32,67 @@ INSERT INTO public.quiztest_question(
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (39,0,'Leonardo da Vinci was vegetarian. ', 2, 1);
+	VALUES (39,0,'Roughly how many metres long is a bowling lane?', 3, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (40,1,'Claude Monet is most known for his paintings of what?', 2, 1);
+	VALUES (40,1,'As of May 2024, Tiger Woods has won a total of 15 majors.', 3, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (41,0,'Where is the Louvre art museum located?', 1, 1);
+	VALUES (41,0,'Who won the Football World Cup in 2022? ', 2, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (42,0,'Vincent van Gogh died a wealthy man. ', 2, 1);
+	VALUES (42,0,'Which country does Kylian Mbappe play for?', 3, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (43,0,'Which of the following instruments is part of the brass family?', 1, 1);
+	VALUES (43,0,'What sport do the New York Yankees play?What sport do the New York Yankees play?', 1, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (44,1,'How many keys does a standard piano have?', 3, 1);
+	VALUES (44,1,'Golf is an acronym for Gentlemen Only Ladies Forbidden.', 3, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (45,1,'In the “Do-Re-Mi” song in “The Sound of Music” film, which note is referred to as “a long, long way to run”?', 2, 1);
+	VALUES (45,1,'The South African Cricket team is known as the ‘Proteas’. ', 1, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (46,0,'Which country is the band ‘ABBA’ from? ', 2, 1);
+	VALUES (46,0,'On which golf course is the US Masters played?', 3, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (47,0,'Elvis Presley is known as the ‘King of Pop’', 3, 1);
+	VALUES (47,0,'Which English football club is known as ‘the canaries’? ', 3, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (48,0,'Beyoncé has won the most Grammys ever. ', 3, 1);
+	VALUES (48,0,'Which male tennis player has won the most major titles? ', 3, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (49,1,'How many members does the South Korean boy band ‘BTS’ have? ', 3, 1);
+	VALUES (49,1,'The ball can bounce twice before returning it in Padel.  ', 1, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (50,0,'Which architectural style uses gargoyles as decorative elements?', 1, 1);
+	VALUES (50,0,'Naomi Osaka is a female tennis player from which country?', 2, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (51,0,'Freddie Mercury was the lead vocalist of the band ‘Queen’.',1, 1);
+	VALUES (51,0,'Sergio Perez is part of which sport?',1, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (52,0,'Which English City are the Beatles from?', 1, 1);
+	VALUES (52,0,'What rugby position does Handre Pollard play?', 2, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (53,1,'Stevie Nicks was a member of which rock band?', 2, 1);
+	VALUES (53,1,'South Africa won the Rugby World Cup in 2023.', 1, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (54,0,'Marina Abramović is a Polish performance artist.', 3, 1);
+	VALUES (54,0,'In what year did Archery become an official Olympic sport? ', 3, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
