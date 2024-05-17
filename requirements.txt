@@ -6,6 +6,7 @@ gunicorn>=22,<23
 djangorestframework
 channels>=4.1.0
 daphne>=4.1.2
+psycopg2
 
 dj-database-url>=2,<3
 requests
