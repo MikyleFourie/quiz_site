@@ -22,9 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#can set to false to turn off debugger and get default 404 page
+#seems like False also makes the admin screen break
+#CSS won't show (by default) if debug is false 
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 SITE_ID = 1
 
@@ -55,6 +58,7 @@ INSTALLED_APPS = [
     'TestingApp',
     'quiztest',
     'rest_framework',
+    'userProfiles'
 ]
 
 MIDDLEWARE = [
@@ -67,14 +71,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #allauth
     'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'quiz_site.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 'DIRS': [], 
+         'DIRS': [str(BASE_DIR.joinpath('templates'))], # new
+        # 'DIRS': [os.path.join(BASE_DIR / 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -161,7 +169,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / 'productionfiles'
+
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'mystaticfiles'
+    ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -170,6 +184,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #allAuth Settings:
 ACCOUNT_EMAIL_REQUIRED=True
 ACCOUNT_AUTHENTICATION_METHOD="username_email"
-#ACCOUNT_EMAIL_VERIFICATION="mandatory"
-ACCOUNT_CONFIRM_EMAIL_ON_GET =True
+ACCOUNT_EMAIL_VERIFICATION="none"
+ACCOUNT_CONFIRM_EMAIL_ON_GET =False
 
+
+#Idk if these additions work for rerouting
+LOGIN_REDIRECT_URL = '/qSelect'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
