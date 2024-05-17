@@ -21,4 +21,6 @@ urlpatterns = [
     path('', include('userProfiles.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('quiztest/', include('quiztest.urls', namespace='quiztest'))
+
 ]
