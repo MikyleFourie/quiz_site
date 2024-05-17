@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Quiz App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/scripts.js' %}"></script>
+</head>
+<body>
+    <header>
+        <h1>My Quiz App</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'quiztest:quiztest' %}">Home</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}
+        <!-- Content from child templates will be inserted here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Quiz App. All rights reserved.</p>
+    </footer>
+</body>
+</html>
