@@ -32,9 +32,9 @@ body {
         padding-left: 10px;
     }
 
-span {
+/*span {
     font-size: smaller;
-}
+}*/
 
 .mycard {
     background-color: #f1f1f1;
@@ -241,8 +241,14 @@ a:link, a:visited {
     justify-content: center;
 }
 
-.playerColumn ul {
-    margin: 0px;
+    .playerColumn ul {
+        margin: 0px;
+        text-shadow: 2px 2px 2px grey;
+    }
+
+.chosen {
+    color: lawngreen;
+    text-shadow: 2px 2px 2px black;
 }
 
 .chatColumn {
@@ -281,15 +287,24 @@ a:link, a:visited {
     }
 
     .quizCard ul {
+        background-color: white;
         list-style-type: none;
         padding: 0;
         margin: 0;
         border-radius: 5px;
     }
 
+.toggled {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+#correct {
+    background-color: #00ef26;
+}
+
 .q li {
-    background-color: #ffffff;
-    background-image: linear-gradient(to right, #375BDC, #4D70EF);
+    background-image: linear-gradient(to right, #375BDC, cornflowerblue);
     background-size: 50px 60px;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -301,6 +316,8 @@ a:link, a:visited {
     margin-top: 5px;
     text-align: center;
 }
+
+
     
     .q li:hover {
         transform: scale(1.1);

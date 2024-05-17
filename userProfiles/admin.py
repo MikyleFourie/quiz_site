@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Users
+from .models import *
 
 # Register your models here.
 class UsersAdmin(admin.ModelAdmin):
@@ -7,3 +7,7 @@ class UsersAdmin(admin.ModelAdmin):
     
 
 admin.site.register(Users, UsersAdmin)
+
+admin.site.register(Quiz)
+admin.site.register(Question)
+admin.site.register(Answer)

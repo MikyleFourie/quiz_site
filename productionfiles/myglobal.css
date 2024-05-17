@@ -32,9 +32,9 @@ body {
         padding-left: 10px;
     }
 
-span {
+/*span {
     font-size: smaller;
-}
+}*/
 
 .mycard {
     background-color: #f1f1f1;
@@ -234,32 +234,52 @@ a:link, a:visited {
     margin-top: 20px;
 }
 
-.playerColumn ul {
-    margin: 0px;
+.playerColumn{
+    position:sticky;
+    display: flex;
+    align-items:  center;
+    justify-content: center;
+}
+
+    .playerColumn ul {
+        margin: 0px;
+        text-shadow: 2px 2px 2px grey;
+    }
+
+.loggedIn {
+    color: lawngreen;
+    text-shadow: 2px 2px 2px black;
+}
+
+.chatColumn {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .quizCard {
     background-color: #f1f1f1;
     background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
-    background-size: 100% 120px;
+    background-size: 100% 140px;
     background-repeat: no-repeat;
     height: 90vh;
     width: 60%;
     border-radius: 5px;
     box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
-    padding: 20px;
+    padding: 5px 20px;
 }
 
     .quizCard h1 {
         text-align: center;
         color: #ffffff;
-        margin: 20px 0 60px 0;
+        margin: 10px 0 60px 0;
     }
 
     .quizCard h2 {
         text-align: center;
-        margin: 20px 0 60px 0;
-        color: #375BDC;
+        margin: 0px;
+        color: white;
     }
 
     .quizCard body {
@@ -267,14 +287,18 @@ a:link, a:visited {
     }
 
     .quizCard ul {
+        background-color: white;
         list-style-type: none;
         padding: 0;
         margin: 0;
         border-radius: 5px;
     }
+.toggled {
+    background-color: #00ef26;
+    color: white;
+}
 
 .q li {
-    background-color: #ffffff;
     background-image: linear-gradient(to right, #375BDC, #4D70EF);
     background-size: 50px 60px;
     background-repeat: no-repeat;
@@ -287,6 +311,8 @@ a:link, a:visited {
     margin-top: 5px;
     text-align: center;
 }
+
+
     
     .q li:hover {
         transform: scale(1.1);
