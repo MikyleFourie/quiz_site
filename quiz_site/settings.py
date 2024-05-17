@@ -111,7 +111,7 @@ DATABASES = {
         'NAME': 'quiz_game_database',
         'USER': 'ivych',
         'PASSWORD': 'ivych1!',
-        'HOST': 'localhost',
+        'HOST': 'postgres://ubjg99a8qcmm7o:pe699a3bafb5874698abe70862bbefe5eb2437a608aa3ceb4cf801827d3c454b8@cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d6f26nemgdgsoj',
         'PORT': '5432',
     }
 }
