@@ -43,9 +43,9 @@ class Question(Updated):
         ordering = ['id']
 
     SCALE = (
-        (0, _('Beginner')),
-        (1, _('Intermediate')),
-        (2, _('Advanced')),
+        (1, _('Beginner')),
+        (2, _('Intermediate')),
+        (3, _('Advanced')),
 
     )
 
@@ -57,9 +57,12 @@ class Question(Updated):
 
     quiz = models.ForeignKey(
         Quizzes, related_name='question', on_delete=models.DO_NOTHING)
+   
     typeOfQ = models.IntegerField(
         choices=TYPE, default=0, verbose_name=_("Type of Question"))
+   
     title = models.CharField(max_length=255, verbose_name=_("Title"), default ='')
+   
     difficulty = models.IntegerField(
         choices=SCALE, default=0, verbose_name=_("Difficulty"))
     #date_created = models.DateTimeField(
