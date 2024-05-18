@@ -1,0 +1,20 @@
+django>=5.0
+django-bootstrap5
+whitenoise[brotli]>=6,<7
+django-allauth[socialaccount]
+gunicorn>=22,<23
+djangorestframework
+channels>=4.1.0
+daphne>=4.1.2
+psycopg2
+
+dj-database-url>=2,<3
+requests
+
+# Uncomment these lines to use a Postgres database. Both are needed, since in production
+# (which uses Linux) we want to install from source, so that security updates from the
+# underlying Heroku stack image are picked up automatically, thanks to dynamic linking.
+# On other platforms/in development, the precompiled binary package is used instead, to
+# speed up installation and avoid errors from missing libraries/heade
+psycopg[c]; sys_platform == "linux"
+psycopg[binary]; sys_platform != "linux"

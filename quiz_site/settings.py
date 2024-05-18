@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,9 +40,14 @@ AUTHENTICATION_BACKENDS = [
 # Application definition
 
 INSTALLED_APPS = [
+ 
+    #'quizes',
+    'TestingApp',
+    'quiztest',
+    'rest_framework',
+    
     "daphne",
     "channels",
-    "bootstrap5",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -112,9 +116,13 @@ ASGI_APPLICATION = "quiz_site.asgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd6f26nemgdgsoj',
+        'USER': 'ubjg99a8qcmm7o',
+        'PASSWORD': 'pe699a3bafb5874698abe70862bbefe5eb2437a608aa3ceb4cf801827d3c454b8',
+        'HOST': 'cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 SOCIALACCOUNT_PROVIDERS = {
