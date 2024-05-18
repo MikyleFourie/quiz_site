@@ -18,10 +18,10 @@ class QuizAdmin(admin.ModelAdmin):
     ]
 
 class AnswerInLineModel(admin.TabularInline): #tabulare allows for two models on same page and both update
-   model = models.Answer
-   fields = [
-       'answer_text',
-       # 'is_right',
+    model = models.Answer
+    fields = [
+        'answer_text',
+        'is_right',
     ]
 
 @admin.register(models.Question)
@@ -41,7 +41,7 @@ class QuestionAdmin(admin.ModelAdmin):
         #'date_updated',
     ]
     inlines = [
-       # AnswerInLineModel,
+        AnswerInLineModel,
     ]
 
 @admin.register(models.Answer) 
@@ -49,7 +49,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = [
         'answer_text',
-        #'is_right',
+        'is_right',
         'question',
     ]
 
