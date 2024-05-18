@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ quiz.title }} - Results</title>
+</head>
+<body>
+    <header>
+        <h1>{{ quiz.title }} - Results</h1>
+    </header>
+    
+    <main>
+        <p>Your score: {{ score }} out of {{ total }}</p>
+        <a href="{% url 'quiztest:quiztest' %}">Take another quiz</a> <!-- Correct URL name -->
+    </main>
+
+</body>
+</html>
