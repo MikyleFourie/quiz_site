@@ -5,10 +5,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from allauth.socialaccount.forms import SignupForm
 
 import userProfiles
-from .models import Users
+from .models import *
 
 # This is a single View. Sort of like a class. for now its called view1
 def view1(request):
@@ -60,3 +61,20 @@ def testing(request):
 def qSelect(request):
     template = loader.get_template('userProfiles/quizSelection.html')
     return HttpResponse(template.render())
+
+def quiz(request):
+    # template = loader.get_template('userProfiles/quiz.html')
+    # return HttpResponse(template.render())
+    quiz_type = Quiz.objects.get(name="GeneralKnowledge")
+    questions = Question.objects.filter(quiz_type=quiz_type)
+    context ={
+        'currentUser': request.user,
+        'users': User.objects.all(),
+        
+        'quiz_type': quiz_type,
+        'questions': questions,
+        }
+    
+    return render(request, 'userProfiles/quiz.html', context)
+    
+    
