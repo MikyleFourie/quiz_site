@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
     <title>{{ quiz.title }}</title>
+    <script>
+        function submitForm() {
+            document.getElementById("quizForm").submit();
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -11,15 +16,19 @@
     <main>
         <h2>{{ quiz.title }}</h2>
         <p>Question {{ question_number }} of {{ total_questions }}</p>
-        <form method="post">
+        <form id="quizForm" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Next</button>
         </form>
     </main>
 
-    <footer>
-        <p>&copy; 2024 My Quiz App. All rights reserved.</p>
-    </footer>
+    <script>
+        // Submit form when an option is selected
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.addEventListener('change', () => {
+                submitForm();
+            });
+        });
+    </script>
 </body>
 </html>
