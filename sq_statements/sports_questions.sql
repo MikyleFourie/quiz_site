@@ -20,7 +20,7 @@ INSERT INTO public.quiztest_question(
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
-	VALUES (36,1,'There is one umpire in a game of netball. (', 1, 1);
+	VALUES (36,1,'There is one umpire in a game of netball. ', 1, 1);
 
 INSERT INTO public.quiztest_question(
 	id, "typeOfQ", title, difficulty, quiz_id)
