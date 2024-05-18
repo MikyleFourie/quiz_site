@@ -65,6 +65,7 @@ class Question(Updated):
    
     difficulty = models.IntegerField(
         choices=SCALE, default=0, verbose_name=_("Difficulty"))
+    
     #date_created = models.DateTimeField(
         #auto_now_add=True, verbose_name=_("Date Created"), default='timezone.now')
     #is_active = models.BooleanField(
@@ -83,9 +84,10 @@ class Answer(Updated):
 
     question = models.ForeignKey(
         Question, related_name='answer', on_delete=models.DO_NOTHING)
-    answer_text = models.CharField(
-        max_length=255, verbose_name=_("Answer Text"))
-    is_right = models.BooleanField(default=False)
+   
+    #answer_text = models.CharField( max_length=255, verbose_name=_("Answer Text"))
+    
+    #is_right = models.BooleanField(default=False)
 
     def __str__(self):
         return self.answer_text #this needs to return a string variable
