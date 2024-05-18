@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <title>{{ quiz.title }}</title>
+</head>
 <body>
     <header>
         <h1>My Quiz App</h1>
     </header>
     
     <main>
-        {% block content %}
         <h2>{{ quiz.title }}</h2>
+        <p>Question {{ question_number }} of {{ total_questions }}</p>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Submit</button>
+            <button type="submit">Next</button>
         </form>
-        
-        {% endblock %}
     </main>
 
     <footer>

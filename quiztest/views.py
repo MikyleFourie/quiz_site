@@ -32,40 +32,70 @@ class QuizQuestion(APIView):
     
 class QuizView(View):
     def get(self, request, *args, **kwargs):
-        try:
-            quiz = Quizzes.objects.get(title=kwargs['title'])
-        except Quizzes.DoesNotExist:
-            return redirect('quiztest:quiztest')  # Redirect to quiz list if quiz not found
-
+        quiz = Quizzes.objects.get(title=kwargs['title'])
         questions = list(quiz.question.all())
-        random.shuffle(questions)  # Shuffle the questions
-        form = QuizForm(questions=questions)
-        return render(request, 'quiz/quiz.html', {'form': form, 'quiz': quiz})
+
+        # Check if we need to start a new quiz
+        if 'question_ids' not in request.session:
+            question_ids = [q.id for q in questions]
+            random.shuffle(question_ids)
+            request.session['question_ids'] = question_ids
+            request.session['current_question_index'] = 0
+            request.session['score'] = 0
+        else:
+            question_ids = request.session['question_ids']
+            current_question_index = request.session['current_question_index']
+
+        # Get the current question
+        current_question_index = request.session['current_question_index']
+        current_question_id = question_ids[current_question_index]
+        current_question = Question.objects.get(id=current_question_id)
+
+        form = QuizForm(question=current_question)
+        return render(request, 'quiz/quiz.html', {
+            'form': form,
+            'quiz': quiz,
+            'question_number': current_question_index + 1,
+            'total_questions': len(question_ids)
+        })
 
     def post(self, request, *args, **kwargs):
-        try:
-            quiz = Quizzes.objects.get(title=kwargs['title'])
-        except Quizzes.DoesNotExist:
-            return redirect('quiztest:quiztest')  # Redirect to quiz list if quiz not found
+        quiz = Quizzes.objects.get(title=kwargs['title'])
+        question_ids = request.session['question_ids']
+        current_question_index = request.session['current_question_index']
+        current_question_id = question_ids[current_question_index]
+        current_question = Question.objects.get(id=current_question_id)
 
-        questions = list(quiz.question.all())
-        form = QuizForm(request.POST, questions=questions)
+        form = QuizForm(request.POST, question=current_question)
 
         if form.is_valid():
-            score = 0
-            total = len(questions)
-            for question in questions:
-                correct_answer = question.answer.filter(is_right=True).first()
-                user_answer_id = form.cleaned_data[f'question_{question.id}']
-                if str(correct_answer.id) == user_answer_id:
-                    score += 1
+            correct_answer = current_question.answer.filter(is_right=True).first()
+            user_answer_id = form.cleaned_data[f'question_{current_question.id}']
+            if str(correct_answer.id) == user_answer_id:
+                request.session['score'] += 1
 
-            context = {
-                'score': score,
-                'total': total,
-                'quiz': quiz,
-            }
-            return render(request, 'quiz/result.html', context)
+            # Move to the next question
+            request.session['current_question_index'] += 1
+            if request.session['current_question_index'] >= len(question_ids):
+                score = request.session['score']
+                total = len(question_ids)
+                context = {
+                    'score': score,
+                    'total': total,
+                    'quiz': quiz,
+                }
+                # Clear session data
+                del request.session['question_ids']
+                del request.session['current_question_index']
+                del request.session['score']
+                return render(request, 'quiz/result.html', context)
+            else:
+                return redirect('quiztest:quiz', title=quiz.title)
         
-        print(form.errors)  # Add this line to see form errors
-        return render(request, 'quiz/quiz.html', {'form': form, 'quiz': quiz})
+        print(form.errors)
+        return render(request, 'quiz/quiz.html', {
+            'form': form,
+            'quiz': quiz,
+            'question_number': current_question_index + 1,
+            'total_questions': len(question_ids)
+        })
