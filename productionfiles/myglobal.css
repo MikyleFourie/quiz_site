@@ -246,7 +246,7 @@ a:link, a:visited {
         text-shadow: 2px 2px 2px grey;
     }
 
-.loggedIn {
+.chosen {
     color: lawngreen;
     text-shadow: 2px 2px 2px black;
 }
@@ -293,13 +293,18 @@ a:link, a:visited {
         margin: 0;
         border-radius: 5px;
     }
+
 .toggled {
-    background-color: #00ef26;
+    background-color: cornflowerblue;
     color: white;
 }
 
+#correct {
+    background-color: #00ef26;
+}
+
 .q li {
-    background-image: linear-gradient(to right, #375BDC, #4D70EF);
+    background-image: linear-gradient(to right, #375BDC, cornflowerblue);
     background-size: 50px 60px;
     background-repeat: no-repeat;
     cursor: pointer;

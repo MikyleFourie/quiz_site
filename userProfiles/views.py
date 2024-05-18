@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from allauth.socialaccount.forms import SignupForm
 
 import userProfiles
-from .models import *
+from quiztest.models import *
 
 # This is a single View. Sort of like a class. for now its called view1
 def view1(request):
@@ -65,8 +65,8 @@ def qSelect(request):
 def quiz(request):
     # template = loader.get_template('userProfiles/quiz.html')
     # return HttpResponse(template.render())
-    quiz_type = Quiz.objects.get(name="GeneralKnowledge")
-    questions = Question.objects.filter(quiz_type=quiz_type)
+    quiz_type = Quizzes.objects.get(title="Sport")
+    questions = Question.objects.filter(quiz=quiz_type)
     context ={
         'currentUser': request.user,
         'users': User.objects.all(),

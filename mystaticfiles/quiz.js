@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     quizSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
-
+        //ahhhS
         if (data.type === 'game_state') {
             const gameState = data.game_state
             document.getElementById('current-question').innerText = gameState.current_question;

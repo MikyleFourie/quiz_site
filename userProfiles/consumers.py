@@ -2,7 +2,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import sync_to_async
 import json
-from .models import *
+from quiztest.models import *
 
 class QuizConsumer(AsyncWebsocketConsumer):
     #var to keep track of users
@@ -11,7 +11,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
     game_state = {
         'current_question': 0,
         # 'quizType': {},
-        'quizType': "General Knowledge",
+        'quizType': "Sport", #somehow need this to be 1
         'question': {},
         'answers': {},
     }
@@ -19,10 +19,10 @@ class QuizConsumer(AsyncWebsocketConsumer):
     #loads the first question in the database, and all its answers into the game_state /class variable/
     @sync_to_async
     def load_initital_game_state(self):
-        question = Question.objects.first()
+        question = Question.objects.filter(quiz = 1).first()
         answers = Answer.objects.filter(question=question)
-        question = question.text
-        answers_list = [{'text': answer.text, 'is_correct': answer.is_correct} for answer in answers]
+        question = question.title
+        answers_list = [{'text': answer.answer_text, 'is_correct': answer.is_right} for answer in answers]
         
         QuizConsumer.game_state['question'] = question
         QuizConsumer.game_state['answers'] = answers_list
