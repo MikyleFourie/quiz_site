@@ -8,24 +8,24 @@ class Users(models.Model):
     
 
 #For test implementation
-class Quiz(models.Model):
-    name = models.CharField(max_length=255)
+# class Quiz(models.Model):
+#     name = models.CharField(max_length=255)
     
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-class Question(models.Model):
-    quiz_type = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
-    text = models.CharField(max_length=1024)
+# class Question(models.Model):
+#     quiz_type = models.ForeignKey(Quiz, related_name='questions', on_delete=models.CASCADE)
+#     text = models.CharField(max_length=1024)
     
-    def __str__(self):
-        return self.text
+#     def __str__(self):
+#         return self.text
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
-    text = models.CharField(max_length=1024)
-    is_correct = models.BooleanField(default=False)
+# class Answer(models.Model):
+#     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+#     text = models.CharField(max_length=1024)
+#     is_correct = models.BooleanField(default=False)
     
-    def __str__(self):
-        return self.text
+#     def __str__(self):
+#         return self.text
 
