@@ -10,4 +10,5 @@ urlpatterns = [
 
     path('', QuizView.as_view(), name='quiztest'),
     path('<str:title>/', QuizView.as_view(), name='quiz'),
+    #path('<str:title>/', QuizView.as_view(), name='result.html'),
 ]

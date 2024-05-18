@@ -1,3 +1,5 @@
+import random
+from django import forms
 from rest_framework import generics
 from rest_framework.response import Response
 from .models import Quizzes, Question, Answer
@@ -7,6 +9,7 @@ from rest_framework.views import APIView
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import QuizForm
+#from django.http import HttpResponse, HttpResponseNotFound
 
 class Quiz(generics.ListAPIView):
 
@@ -29,25 +32,34 @@ class QuizQuestion(APIView):
     
 class QuizView(View):
     def get(self, request, *args, **kwargs):
-        quiz = Quizzes.objects.get(title=kwargs['title'])
-        questions = quiz.question.all()
+        try:
+            quiz = Quizzes.objects.get(title=kwargs['title'])
+        except Quizzes.DoesNotExist:
+            return redirect('quiztest:quiztest')  # Redirect to quiz list if quiz not found
+
+        questions = list(quiz.question.all())
+        random.shuffle(questions)  # Shuffle the questions
         form = QuizForm(questions=questions)
         return render(request, 'quiz/quiz.html', {'form': form, 'quiz': quiz})
 
     def post(self, request, *args, **kwargs):
-        quiz = Quizzes.objects.get(title=kwargs['title'])
-        questions = quiz.question.all()
+        try:
+            quiz = Quizzes.objects.get(title=kwargs['title'])
+        except Quizzes.DoesNotExist:
+            return redirect('quiztest:quiztest')  # Redirect to quiz list if quiz not found
+
+        questions = list(quiz.question.all())
         form = QuizForm(request.POST, questions=questions)
-        
+
         if form.is_valid():
             score = 0
-            total = questions.count()
+            total = len(questions)
             for question in questions:
                 correct_answer = question.answer.filter(is_right=True).first()
                 user_answer_id = form.cleaned_data[f'question_{question.id}']
                 if str(correct_answer.id) == user_answer_id:
                     score += 1
-            
+
             context = {
                 'score': score,
                 'total': total,
@@ -55,4 +67,5 @@ class QuizView(View):
             }
             return render(request, 'quiz/result.html', context)
         
+        print(form.errors)  # Add this line to see form errors
         return render(request, 'quiz/quiz.html', {'form': form, 'quiz': quiz})
