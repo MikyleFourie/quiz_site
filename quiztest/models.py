@@ -87,7 +87,7 @@ class Answer(Updated):
    
     answer_text = models.CharField( max_length=255, verbose_name=_("Answer Text"))
     
-    #is_right = models.BooleanField(default=False)
+    is_right = models.BooleanField(default=False)
 
     def __str__(self):
         return self.answer_text #this needs to return a string variable

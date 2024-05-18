@@ -18,7 +18,7 @@ class AnswerSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'answer_text',
-            #'is_right',
+            'is_right',
         ]
 
 class RandomQuestionSerializer(serializers.ModelSerializer):

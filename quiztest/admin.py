@@ -21,7 +21,7 @@ class AnswerInLineModel(admin.TabularInline): #tabulare allows for two models on
     model = models.Answer
     fields = [
         'answer_text',
-        #'is_right',
+        'is_right',
     ]
 
 @admin.register(models.Question)
@@ -49,7 +49,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display = [
         'answer_text',
-        #'is_right',
+        'is_right',
         'question',
     ]
 
