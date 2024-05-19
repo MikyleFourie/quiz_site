@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const pathParts = window.location.pathname.split('/');
     const quizTitle = pathParts[pathParts.length - 2]; // Assuming URL ends with quiz/<title>/
     // Construct the WebSocket URL
-    const quizSocket = new WebSocket('wss://' + window.location.host + '/ws/quiz/'+ quizTitle + '/');
+    const quizSocket = new WebSocket('wss://' + window.location.host + '/wss/quiz/'+ quizTitle + '/');
 
 
 
