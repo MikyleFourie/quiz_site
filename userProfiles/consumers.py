@@ -31,9 +31,9 @@ class QuizConsumer(AsyncWebsocketConsumer):
         self.quiz_id = Quizzes.objects.get(title=QuizConsumer.game_state['quizType']).id
 
         #for a random first question  
-        # question_id = self.question_ids[0]
-        # question = Question.objects.get(id = question_id)
-        question = Question.objects.first() #for the first question in database
+        question_id = self.question_ids[0]
+        question = Question.objects.get(id = question_id)
+        #question = Question.objects.first() #for the first question in database
         answers = Answer.objects.filter(question=question)
         question = question.title
         answers_list = [{'id': answer.id,'text': answer.answer_text, 'is_right': answer.is_right} for answer in answers]
