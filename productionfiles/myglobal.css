@@ -12,6 +12,16 @@ body {
     color: #585d74;
 }
 
+
+    /*form p {
+        text-align: center;
+        color: #ffffff;
+        margin: 10px 0 60px 0;
+        font-size: 1.75em;
+    }*/
+
+    
+
 .topnav {
     width: 100vw;
     background-color: #375BDC;
@@ -239,6 +249,7 @@ a:link, a:visited {
     display: flex;
     align-items:  center;
     justify-content: center;
+    flex-direction: column;
 }
 
     .playerColumn ul {
@@ -271,6 +282,7 @@ a:link, a:visited {
 }
 
     .quizCard h1 {
+        font-size: 1.75em;
         text-align: center;
         color: #ffffff;
         margin: 10px 0 60px 0;

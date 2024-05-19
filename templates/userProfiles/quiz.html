@@ -13,62 +13,42 @@
 <div class="big">
 
     <div class="playerColumn">
-
+        <h3>Number of Users: <span id="numOfUsers"></span></h3>
         <ul id="user_list">
-
-            {% for user in users %}
-            {% if user.username == currentUser.username %}
-            <li class="loggedIn">{{user.username}}: ___</li>
-            {% else %}
-            <li>{{user.username}}: ___</li>
-            {% endif %}
-            {% endfor %}
-
-            <!--<li>Player1: ___</li>
-    <li>Player2: ___</li>
-    <li>Player3: ___</li>
-    <li>Player4: ___</li>-->
-
+            
         </ul>
 
     </div>
 
     <div class="quizCard">
         <h2>Q <span id="current-question"></span>/10 - <span id="quiz-type"> {{ quiz_type }}</span></h2>
-        <h1 id="question-text"> </h1>
-        <!--<h2>Q{{ current_question_number }} / 10</h2>-->
-        <!--<h2>QT: {{quiz}} </h2>
-        <h1 id="current-question">{{ game_state.current_question }}</h1>-->
-
+        <h1 id="question-text"></h1>
+        
         <ul class="q" id="answers-list">
             <!--<li>Answer A</li>
-        <li>Answer B</li>
-        <li>Answer C</li>
-        <li>Answer D</li>-->
-        {% comment %}
-            {% for x in questions %}
-            <li>{{ x.text }}</li>
-            {% endfor %}
-        {% endcomment %}
-            <!--{% for answer in current_question.answers %}
-        <li class="answer-option" data-value="{{ answer.id }}">{{ answer.text }}: ___</li>
-        {% endfor %}-->
-
+            <li>Answer B</li>
+            <li>Answer C</li>
+            <li>Answer D</li>-->
+            
         </ul>
 
+        <!--<form id="quizForm" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
+
+        <p id="trbl"></p>-->
+        
     </div>
 
     <div class="chatColumn">
 
         <p>CHAT GOES HERE</p>
+        <!--<p>{{quiz_title}}</p>-->
 
     </div>
 
 </div>
 
-<!--<script>
-    const ws = new WebSocket('ws://'+ window.location.host+ '/ws/quiz/');
-
-</script>-->
 
 {% endblock %}

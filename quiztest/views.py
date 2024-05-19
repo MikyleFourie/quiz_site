@@ -52,12 +52,12 @@ class QuizView(View):
         current_question = Question.objects.get(id=current_question_id)
 
         form = QuizForm(question=current_question)
-        return render(request, 'quiz/quiz.html', {
-            'form': form,
-            'quiz': quiz,
-            'question_number': current_question_index + 1,
-            'total_questions': len(question_ids)
-        })
+        # return render(request, 'quiz/quiz.html', {
+        #     'form': form,
+        #     'quiz': quiz,
+        #     'question_number': current_question_index + 1,
+        #     'total_questions': len(question_ids)
+        # })
 
     def post(self, request, *args, **kwargs):
         quiz = Quizzes.objects.get(title=kwargs['title'])
@@ -88,14 +88,14 @@ class QuizView(View):
                 del request.session['question_ids']
                 del request.session['current_question_index']
                 del request.session['score']
-                return render(request, 'quiz/result.html', context)
-            else:
-                return redirect('quiztest:quiz', title=quiz.title)
+              #  return render(request, 'quiz/result.html', context)
+           # else:
+              #  return redirect('quiztest:quiz', title=quiz.title)
         
-        print(form.errors)
-        return render(request, 'quiz/quiz.html', {
-            'form': form,
-            'quiz': quiz,
-            'question_number': current_question_index + 1,
-            'total_questions': len(question_ids)
-        })
+        # print(form.errors)
+        # return render(request, 'quiz/quiz.html', {
+        #     'form': form,
+        #     'quiz': quiz,
+        #     'question_number': current_question_index + 1,
+        #     'total_questions': len(question_ids)
+        # })
