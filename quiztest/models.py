@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.name
@@ -62,7 +62,7 @@ class Question(Updated):
     typeOfQ = models.IntegerField(
         choices=TYPE, default=0, verbose_name=_("Type of Question"))
    
-    title = models.CharField(max_length=255, verbose_name=_("Title"), default ='')
+    title = models.CharField(max_length=255, verbose_name=_("Title"), default ='', null=True)
    
     difficulty = models.IntegerField(
         choices=SCALE, default=0, verbose_name=_("Difficulty"), null=True)

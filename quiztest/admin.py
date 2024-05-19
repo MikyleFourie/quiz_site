@@ -7,7 +7,15 @@ from TestingApp.models import GameSession
 class CategoryAdmin(admin.ModelAdmin):
     list_display = [
         'name',
+        'id',
     ]
+
+    search_fields = ['id', 'name']
+    
+    list_filter = ['name']
+   
+
+
 
 @admin.register(models.Quizzes)
 
@@ -17,12 +25,19 @@ class QuizAdmin(admin.ModelAdmin):
         'title',
     ]
 
+    search_fields = ['id', 'title']
+    
+    list_filter = ['title']
+
 class AnswerInLineModel(admin.TabularInline): #tabulare allows for two models on same page and both update
     model = models.Answer
     fields = [
+        'id',
         'answer_text',
         'is_right',
     ]
+
+
 
 @admin.register(models.Question)
 
@@ -44,6 +59,10 @@ class QuestionAdmin(admin.ModelAdmin):
         AnswerInLineModel,
     ]
 
+    search_fields = ['id', 'title', 'quiz', 'difficulty']
+    
+    list_filter = ['question', 'typeOfQ', 'difficulty']
+
 @admin.register(models.Answer) 
 
 class AnswerAdmin(admin.ModelAdmin):
@@ -52,6 +71,10 @@ class AnswerAdmin(admin.ModelAdmin):
         'is_right',
         'question',
     ]
+
+    search_fields = ['id', 'answer_text', 'is_right', 'question']
+    
+    list_filter = ['question', 'is_right']
 
 @admin.register(GameSession) 
 
