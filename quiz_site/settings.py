@@ -112,11 +112,6 @@ ASGI_APPLICATION = "quiz_site.asgi.application"
 #         },
 #     'ROUTING': 'userProfiles.routing.channel_routing',    
 #     }
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
-    },
-}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

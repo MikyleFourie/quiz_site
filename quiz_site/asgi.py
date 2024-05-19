@@ -21,7 +21,7 @@ import userProfiles.routing
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quiz_site.settings')
 
 application = ProtocolTypeRouter({
-    "https": get_asgi_application(),
+    "http": get_asgi_application(),
     "websocket": 
     AllowedHostsOriginValidator(
         AuthMiddlewareStack(
