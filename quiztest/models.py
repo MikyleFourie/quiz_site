@@ -18,8 +18,9 @@ class Quizzes(models.Model):
 
     title = models.CharField(max_length=255, default=_(
         "New Quiz"), verbose_name=_("Quiz Title"))
+    
     category = models.ForeignKey(
-        Category, default=1, on_delete=models.DO_NOTHING)
+        Category, default=1, on_delete=models.PROTECT)
     #date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -56,7 +57,7 @@ class Question(Updated):
     )
 
     quiz = models.ForeignKey(
-        Quizzes, related_name='question', on_delete=models.DO_NOTHING)
+        Quizzes, related_name='question', on_delete=models.PROTECT)
    
     typeOfQ = models.IntegerField(
         choices=TYPE, default=0, verbose_name=_("Type of Question"))
@@ -64,7 +65,9 @@ class Question(Updated):
     title = models.CharField(max_length=255, verbose_name=_("Title"), default ='')
    
     difficulty = models.IntegerField(
-        choices=SCALE, default=0, verbose_name=_("Difficulty"))
+        choices=SCALE, default=0, verbose_name=_("Difficulty"), null=True)
+    
+
     #date_created = models.DateTimeField(
         #auto_now_add=True, verbose_name=_("Date Created"), default='timezone.now')
     #is_active = models.BooleanField(
@@ -82,10 +85,14 @@ class Answer(Updated):
         ordering = ['id']
 
     question = models.ForeignKey(
-        Question, related_name='answer', on_delete=models.DO_NOTHING)
+        Question, related_name='answer', on_delete=models.PROTECT)
+    
+
     answer_text = models.CharField(
         max_length=255, verbose_name=_("Answer Text"))
-    is_right = models.BooleanField(default=False)
+    
+
+    is_right = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return self.answer_text #this needs to return a string variable
