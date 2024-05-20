@@ -1,4 +1,4 @@
-#these need to be installed locally for the app to run locally
+#These need to be installed locally for the app to run locally
 django>=5.0
 whitenoise[brotli]>=6,<7
 django-allauth[socialaccount]
@@ -9,7 +9,7 @@ daphne>=4.1.2
 psycopg2
 
 
-#These are only nesacary fir the server:
+#These are only necessary for the server:
 dj-database-url>=2,<3
 requests
 psycopg[c]; sys_platform == "linux"
