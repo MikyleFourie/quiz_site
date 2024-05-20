@@ -1,6 +1,7 @@
 from django.contrib import admin
 from . import models
-from TestingApp.models import GameSession
+from TestingApp.models import GameSession 
+
 
 @admin.register(models.Category)
 
@@ -61,7 +62,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
     search_fields = ['id', 'title', 'quiz', 'difficulty']
     
-    list_filter = ['question', 'typeOfQ', 'difficulty']
+    list_filter = ['quiz', 'typeOfQ', 'difficulty']
 
 @admin.register(models.Answer) 
 
