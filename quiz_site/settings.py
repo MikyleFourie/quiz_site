@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     
     "daphne",
     "channels",
+    "debug_toolbar",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -66,6 +68,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,7 +79,12 @@ MIDDLEWARE = [
     #allauth
     'allauth.account.middleware.AccountMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware', #MOVED TO END FOR TEST 3
 ]
+
+INTERNAL_IPS =[
+    '127.0.0.1',
+    ]
 
 ROOT_URLCONF = "quiz_site.urls"
 
@@ -124,8 +132,12 @@ DATABASES = {
         'PASSWORD': 'pe699a3bafb5874698abe70862bbefe5eb2437a608aa3ceb4cf801827d3c454b8',
         'HOST': 'cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
+        'CONN_MAX_AGE': 60, #TEST 1 TO MAKE LOADING FASTER
     }
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db' #TEST 2 TO MAKE LOADING FASTER
+
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
         "APP": {
