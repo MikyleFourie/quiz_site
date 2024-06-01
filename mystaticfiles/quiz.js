@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const pathParts = window.location.pathname.split('/');
     const quizTitle = pathParts[pathParts.length - 2]; // Assuming URL ends with quiz/<title>/
     // Construct the WebSocket URL
-    const quizSocket = new WebSocket('ws://' + window.location.host + '/ws/quiz/'+ quizTitle + '/');
-
-
+    //const quizSocket = new WebSocket('ws://' + window.location.host + '/ws/quiz/'+ quizTitle + '/');
+    const quizSocket = new WebSocket(  'wss://' + window.location.host + '/wss/quiz/' + quizTitle + '/');
+    //has to match with:                wss://ppg-quiz-site-265ccf6f2c38.herokuapp.com/wss/quiz/Art/
 
     //Get all HTML containers we need to manipulate
     const current_question_num_element = document.getElementById('current-question');
