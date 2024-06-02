@@ -4,10 +4,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Extract the quiz title from the current URL
     const pathParts = window.location.pathname.split('/');
     const quizTitle = pathParts[pathParts.length - 2]; // Assuming URL ends with quiz/<title>/
+
+    // Get the protocol of the current window
+    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+
     // Construct the WebSocket URL
     //const quizSocket = new WebSocket('ws://' + window.location.host + '/ws/quiz/'+ quizTitle + '/');
-    const quizSocket = new WebSocket(  'wss://' + window.location.host + '/wss/quiz/' + quizTitle + '/');
+    //const quizSocket = new WebSocket(  'wss://' + window.location.host + '/wss/quiz/' + quizTitle + '/');
     //has to match with:                wss://ppg-quiz-site-265ccf6f2c38.herokuapp.com/wss/quiz/Art/
+    const quizSocket = new WebSocket(protocol + window.location.host + '/ws/quiz/' + quizTitle + '/');
+
 
     //Get all HTML containers we need to manipulate
     const current_question_num_element = document.getElementById('current-question');

@@ -27,7 +27,13 @@ SECRET_KEY = "django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v
 # can set to false to turn off debugger and get default 404 page
 # seems like False also makes the admin screen break
 # CSS won't show (by default) if debug is false
-DEBUG = True
+
+#DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True' 
+#This line makes the DEBUG variable set dynamically depending on the environment.
+#The local server should be set to True. The Heroku server should be set to false
+
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -50,7 +56,6 @@ INSTALLED_APPS = [
     
     "daphne",
     "channels",
-    "debug_toolbar",
 
     "django.contrib.admin",
     "django.contrib.auth",
@@ -79,12 +84,22 @@ MIDDLEWARE = [
     #allauth
     'allauth.account.middleware.AccountMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware', #MOVED TO END FOR TEST 3
 ]
 
 INTERNAL_IPS =[
     '127.0.0.1',
     ]
+
+#Sets up the Django Toolbar for debugging on the local server
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar',
+        ]
+    
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        ]
+
 
 ROOT_URLCONF = "quiz_site.urls"
 
