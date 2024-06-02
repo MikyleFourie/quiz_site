@@ -35,7 +35,8 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 
 
-ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['ppg-quiz-site-265ccf6f2c38.herokuapp.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
