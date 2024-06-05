@@ -36,7 +36,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 
 #ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['ppg-quiz-site-265ccf6f2c38.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -142,10 +142,11 @@ CHANNEL_LAYERS = {
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": os.environ.get('REDIS_URL'),
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         "OPTIONS": {
-                "ssl_cert_reqs": None
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "ssl_cert_reqs": None
         }
     }
 }
@@ -167,7 +168,8 @@ DATABASES = {
     }
 }
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db' #TEST 2 TO MAKE LOADING FASTER
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache' #TEST 2 TO MAKE LOADING FASTER
+SESSION_CACHE_ALIES = "default"
 
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
