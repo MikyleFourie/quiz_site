@@ -129,13 +129,28 @@ TEMPLATES = [
 WSGI_APPLICATION = "quiz_site.wsgi.application"
 
 # This is for channels things
+# May want to swap to REDIS_TLD_URL for full deployment
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
+            },
+        },
+    'ROUTING': 'userProfiles.routing.channel_routing',    
+    }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": os.environ.get('REDIS_URL'),
+        "OPTIONS": {
+                "ssl_cert_reqs": None
+        }
+    }
+}
+
 ASGI_APPLICATION = "quiz_site.asgi.application"
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels.layers.InMemoryChannelLayer',
-#         },
-#     'ROUTING': 'userProfiles.routing.channel_routing',    
-#     }
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

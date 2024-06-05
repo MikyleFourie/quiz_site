@@ -14,22 +14,24 @@ from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from channels.security.websocket import AllowedHostsOriginValidator
-import userProfiles.routing
 
-# from quiz import routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quiz_site.settings')
 
+
+django_asgi_app = get_asgi_application()
+
+
+from userProfiles.routing import websocket_urlpatterns
+
+
+#Depending on HTTP or Websocket, route to these two places
 application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
+    "http": django_asgi_app,
     "websocket": 
     AllowedHostsOriginValidator(
         AuthMiddlewareStack(
-            URLRouter(userProfiles.routing.websocket_urlpatterns)
+            URLRouter(websocket_urlpatterns)
         ),
     )
 })
-
-
-
-#application = get_asgi_application()
