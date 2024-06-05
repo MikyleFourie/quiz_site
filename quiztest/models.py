@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -86,6 +87,12 @@ class Answer(models.Model):
     def __str__(self):
         return self.answer_text 
     
+
+class Leaderboard(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+    
+
 
 
 

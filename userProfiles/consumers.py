@@ -1,6 +1,7 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import sync_to_async
+from channels.db import database_sync_to_async
 import json
 from quiztest.models import *
 
@@ -53,6 +54,8 @@ class QuizConsumer(AsyncWebsocketConsumer):
             }
         for consumer in QuizConsumer.connected_users.values():
             await consumer.send(text_data=json.dumps(message))
+
+
 
 #On Connect Behaviours----------------------
     async def connect(self):
@@ -112,28 +115,38 @@ class QuizConsumer(AsyncWebsocketConsumer):
             self.answer_id = text_data_json.get('answer_id')
             
             #scoring logic
+            for answer in QuizConsumer.game_state['answers']:
+                    if answer["is_right"]==True :
+                        correct_answer_id = answer['id']
+
+            #compare and add to score
+            if correct_answer_id == self.answer_id:
+                self.score += 1
+                
+                #add user score ??
             
             if QuizConsumer.users_completed >= QuizConsumer.total_users:
                 #Get users answer and correct answer
                 
                 #correct_answer = QuizConsumer.game_state.answers.filter(is_correct=True).first()
-                for answer in QuizConsumer.game_state['answers']:
-                    if answer["is_right"]==True :
-                        correct_answer_id = answer['id']
                 
-                #compare and add to score
-                if correct_answer_id == self.answer_id:
-                    self.score += 1
-                
+            
                 #Progresses to next question?
                 QuizConsumer.game_state['current_question'] += 1
                 QuizConsumer.users_completed = 0
-
+                
                 #if not at the end of quiz
                 if QuizConsumer.game_state['current_question'] < len(self.question_ids):
                     await self.broadcast_user_list()
                     await self.update_game_state()
                     await self.broadcast_game_state()
+                    await self.update_score_in_db()
+    
+    @database_sync_to_async
+    def update_score_in_db(self):
+        leaderboard_entry, created = Leaderboard.objects.get_or_create(user=self.scope['user'])
+        leaderboard_entry.score = self.score
+        leaderboard_entry.save()
                     
 
     @sync_to_async
