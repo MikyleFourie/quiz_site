@@ -30,13 +30,15 @@ SECRET_KEY = "django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v
 
 #DEBUG = True
 DEBUG = os.environ.get('DEBUG', 'False') == 'True' 
-#This line makes the DEBUG variable set dynamically depending on the environment.
-#The local server should be set to True. The Heroku server should be set to false
+print(f"DEBUG is set to {DEBUG}")
+#This makes the DEBUG variable set dynamically depending on the environment.
+#The local server should be set to True. The Heroku server should be set to False
 
 
 
-#ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+
+ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -91,7 +93,7 @@ INTERNAL_IPS =[
     '127.0.0.1',
     ]
 
-#Sets up the Django Toolbar for debugging on the local server
+#Conditionally Sets up the Django Toolbar for debugging on the local server, and not on Heroku
 if DEBUG:
     INSTALLED_APPS += [
         'debug_toolbar',
@@ -130,7 +132,24 @@ WSGI_APPLICATION = "quiz_site.wsgi.application"
 
 # This is for channels things
 # May want to swap to REDIS_TLD_URL for full deployment
-CHANNEL_LAYERS = {
+# Conditionally Sets up the which BackEnd for Channels Layers. Local:InMemory | Heroku:Redis 
+if DEBUG:
+    #If DEBUG=TRUE, i.e., LOCAL
+    CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        },
+    'ROUTING': 'userProfiles.routing.channel_routing',    
+    }
+    
+    CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        }
+    }
+else:
+    #If DEBUG=FALSE, i.e., PRODUCTION
+    CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
@@ -139,19 +158,23 @@ CHANNEL_LAYERS = {
         },
     'ROUTING': 'userProfiles.routing.channel_routing',    
     }
-
-CACHES = {
+    
+    CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "ssl_cert_reqs": None
+            }
         }
     }
-}
+
 
 ASGI_APPLICATION = "quiz_site.asgi.application"
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache' #TEST 2 TO MAKE LOADING FASTER
+SESSION_CACHE_ALIES = "default"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -168,8 +191,7 @@ DATABASES = {
     }
 }
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache' #TEST 2 TO MAKE LOADING FASTER
-SESSION_CACHE_ALIES = "default"
+
 
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
