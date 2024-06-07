@@ -26,7 +26,7 @@
         {% for session in leaderboard %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ session.user.username }}</td>  <!-- assuming 'player' is a foreign key to a Player model -->
+            <td>{{ session.user}}</td>  <!-- assuming 'player' is a foreign key to a Player model -->
             <td>{{ session.score }}</td>
         </tr>
         {% endfor %}
