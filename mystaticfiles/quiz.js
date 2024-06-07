@@ -23,31 +23,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const user_ul_element = document.getElementById('user_list');
     const numOfUsers_element = document.getElementById('numOfUsers');
 
-    //document.getElementById('quizForm').onsubmit = function (e) {
-    //    console.log("form.onSubmit ran!");
-    //    e.preventDefault();
-    //    const formData = new FormData(this);
-    //    const formObj = {};
-    //    formData.forEach((value, key) => { formObj[key] = value; });
-    //    quizSocket.send(JSON.stringify({
-    //        'type': 'form_message',
-    //        'message': formObj,
-    //    }));
-    //};
-
-    //document.querySelectorAll('#quizForm input[type="radio"]').forEach(input => {
-
-    //    input.addEventListener('change', () => {
-    //        submitForm();
-    //        console.log("it radioed!", input.value);
-    //    });
-    //});
-
-    //function submitForm() {
-    //    document.getElementById("quizForm").submit();
-    //    console.log("it submitted!");
-    //}
-
     
 
 
