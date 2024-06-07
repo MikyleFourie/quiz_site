@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-
 import os
 from pathlib import Path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,21 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# can set to false to turn off debugger and get default 404 page
-# seems like False also makes the admin screen break
-# CSS won't show (by default) if debug is false
 
-#DEBUG = True
-DEBUG = os.environ.get('DEBUG', 'False') == 'True' 
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 print(f"DEBUG is set to {DEBUG}")
-#This makes the DEBUG variable set dynamically depending on the environment.
-#The local server should be set to True. The Heroku server should be set to False
-
-
+# This makes the DEBUG variable set dynamically depending on the environment.
+# The local server should be set to True. The Heroku server should be set to False
 
 
 ALLOWED_HOSTS = ["*"]
-#ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -51,15 +45,12 @@ AUTHENTICATION_BACKENDS = [
 # Application definition
 
 INSTALLED_APPS = [
- 
     #'quizes',
-    'TestingApp',
-    'quiztest',
-    'rest_framework',
-    
+    "TestingApp",
+    "quiztest",
+    "rest_framework",
     "daphne",
     "channels",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -76,32 +67,31 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #allauth
-    'allauth.account.middleware.AccountMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # allauth
+    "allauth.account.middleware.AccountMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
-INTERNAL_IPS =[
-    '127.0.0.1',
-    ]
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
-#Conditionally Sets up the Django Toolbar for debugging on the local server, and not on Heroku
+# Conditionally Sets up the Django Toolbar for debugging on the local server, and not on Heroku
 if DEBUG:
     INSTALLED_APPS += [
-        'debug_toolbar',
-        ]
-    
+        "debug_toolbar",
+    ]
+
     MIDDLEWARE += [
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-        ]
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
 
 
 ROOT_URLCONF = "quiz_site.urls"
@@ -132,65 +122,66 @@ WSGI_APPLICATION = "quiz_site.wsgi.application"
 
 # This is for channels things
 # May want to swap to REDIS_TLD_URL for full deployment
-# Conditionally Sets up the which BackEnd for Channels Layers. Local:InMemory | Heroku:Redis 
+# Conditionally Sets up the which BackEnd for Channels Layers. Local:InMemory | Heroku:Redis
 if DEBUG:
-    #If DEBUG=TRUE, i.e., LOCAL
+    # If DEBUG=TRUE, i.e., LOCAL
     CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        "default": {
+            "BACKEND": "channels.layers.InMemoryChannelLayer",
         },
-    'ROUTING': 'userProfiles.routing.channel_routing',    
+        "ROUTING": "userProfiles.routing.channel_routing",
     }
-    
+
     CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         }
     }
 else:
-    #If DEBUG=FALSE, i.e., PRODUCTION
+    # If DEBUG=FALSE, i.e., PRODUCTION
     CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [os.environ.get("REDIS_URL", "redis://localhost:6379")]
             },
         },
-    'ROUTING': 'userProfiles.routing.channel_routing',    
+        "ROUTING": "userProfiles.routing.channel_routing",
     }
-    
+
     CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "ssl_cert_reqs": None
-            }
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": [os.environ.get("REDIS_URL", "redis://localhost:6379")],
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "ssl_cert_reqs": None,
+            },
         }
     }
 
 
 ASGI_APPLICATION = "quiz_site.asgi.application"
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache' #TEST 2 TO MAKE LOADING FASTER
+SESSION_ENGINE = (
+    "django.contrib.sessions.backends.cache"  # TEST 2 TO MAKE LOADING FASTER
+)
 SESSION_CACHE_ALIES = "default"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd6f26nemgdgsoj',
-        'USER': 'ubjg99a8qcmm7o',
-        'PASSWORD': 'pe699a3bafb5874698abe70862bbefe5eb2437a608aa3ceb4cf801827d3c454b8',
-        'HOST': 'cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
-        'CONN_MAX_AGE': 60, #TEST 1 TO MAKE LOADING FASTER
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "d6f26nemgdgsoj",
+        "USER": "ubjg99a8qcmm7o",
+        "PASSWORD": "pe699a3bafb5874698abe70862bbefe5eb2437a608aa3ceb4cf801827d3c454b8",
+        "HOST": "cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com",
+        "PORT": "5432",
+        "CONN_MAX_AGE": 60,  # TEST 1 TO MAKE LOADING FASTER
     }
 }
-
 
 
 SOCIALACCOUNT_PROVIDERS = {

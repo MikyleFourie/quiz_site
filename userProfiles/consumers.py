@@ -1,3 +1,4 @@
+from sqlite3 import complete_statement
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import sync_to_async
@@ -6,13 +7,21 @@ from quiztest.models import *
 
 
 class QuizConsumer(AsyncWebsocketConsumer):
+    #QuizConsumer object is made up of:
+        # maxUsers constant
+        # list of Connected Users
+        # list of user scores
+        # number tracking total_users
+        # number tracking how many users are complete_statement
+        # GameState struct contiaining currentQuestion, QuizType, Question, Answers, numOfUsers
+
     #var to keep track of users
+    maxUsers = 1;
     connected_users = {}
-    users_completed = 0
-    total_users = 0
     user_scores = {}
-    
-    #Create a global game_state
+    total_users = 0
+    users_completed = 0
+    #global game_state
     game_state = {
         'current_question': 0,
         # 'quizType': {},
