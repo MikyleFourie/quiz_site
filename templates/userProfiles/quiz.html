@@ -5,41 +5,30 @@
   Screen to select a Quiz
 {% endblock %}
 
-{% block hAdd%} 
+{% block hAdd %} 
 <script src="{% static 'quiz.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
 <div class="big">
-
     <div class="playerColumn">
         <h3>Number of Users: <span id="numOfUsers"></span></h3>
-        <ul id="user_list">
-            
-        </ul>
-
+        <ul id="user_list"></ul>
     </div>
 
     <div class="quizCard">
-        <h2>Q <span id="current-question"></span>/10 - <span id="quiz-type"> {{ quiz_type }}</span></h2>
+        <h2>Q <span id="current-question"></span>/10 - <span id="quiz-type">{{ quiz_type }}</span></h2>
         <h1 id="question-text"></h1>
         
-        <ul class="q" id="answers-list">
-        </ul>
+        <ul class="q" id="answers-list"></ul>
 
         <div id="timer">
-            <p>TIMER GOES HERE</p>
-
+            <p>Time left: <span id="timer-count">15</span> seconds</p>
         </div> <!-- Timer will be displayed here -->
-        
     </div>
 
     <div class="chatColumn">
-
         <p>CHAT GOES HERE</p>
-        <!--<p>{{quiz_title}}</p>-->
-
     </div>
-
 </div>
 {% endblock %}
