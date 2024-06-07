@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-
+from django.contrib.postgres.fields import ArrayField
 
 class Category(models.Model):
 
@@ -92,6 +92,24 @@ class Leaderboard(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
     
+
+class Session(models.Model):
+    QuizID = models.ForeignKey(Quizzes, on_delete=models.CASCADE)
+    
+    Participants = ArrayField(models.CharField(max_length=255, blank=True))
+    UserScores = ArrayField(models.IntegerField(blank=True))
+
+    QuizType = models.CharField(max_length= 255, null=True)
+
+   # @property
+    #def QuizType(self):
+     #   return self.QuizID.title
+
+    #session = Session.objects.get(id=1)  # get a Book instance
+    #QuizType = session.author.name
+
+
+
 
 
 
