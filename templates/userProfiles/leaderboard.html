@@ -1,0 +1,36 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Screen for Leaderboard
+{% endblock %}
+
+
+{% block content %}
+<div class="mycard">
+    <h1>Leaderboard</h1>
+    
+    <!-- in future it would look something like this
+    <ul>
+        {% for x in quizList %}
+        <li onclick="window.location = //locationofplay">{{ x.category }}</li>
+        {% endfor %}
+    </ul>
+
+     but for now...:   -->
+     <table>
+        <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Score</th>
+        </tr>
+        {% for session in leaderboard %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ session.user.username }}</td>  <!-- assuming 'player' is a foreign key to a Player model -->
+            <td>{{ session.score }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+{% endblock %}
