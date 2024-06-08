@@ -5,7 +5,7 @@ from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
 import json
 from quiztest.models import *
-
+from django.db.models import F
 
 class QuizConsumer(AsyncWebsocketConsumer):
     #QuizConsumer object is made up of:
@@ -130,17 +130,16 @@ class QuizConsumer(AsyncWebsocketConsumer):
 
             #compare and add to score
             if correct_answer_id == self.answer_id:
-                self.score += 1
+                self.score +=1
                 
                 #add user score ??
             
             if QuizConsumer.users_completed >= QuizConsumer.total_users:
-                #Get users answer and correct answer
-                
-                #correct_answer = QuizConsumer.game_state.answers.filter(is_correct=True).first()
-                
+            #Get users answer and correct answer
             
-                #Progresses to next question?
+            #correct_answer = QuizConsumer.game_state.answers.filter(is_correct=True).first()
+            
+            #Progresses to next question?
                 QuizConsumer.game_state['current_question'] += 1
                 QuizConsumer.users_completed = 0
                 
@@ -150,7 +149,10 @@ class QuizConsumer(AsyncWebsocketConsumer):
                     await self.update_game_state()
                     await self.broadcast_game_state()
                     await self.update_score_in_db()
-    
+                else:
+                    await self.update_score_in_db()
+
+
     @database_sync_to_async
     def update_score_in_db(self):
         leaderboard_entry, created = Leaderboard.objects.get_or_create(user=self.scope['user'])

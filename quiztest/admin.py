@@ -1,6 +1,6 @@
 from django.contrib import admin
 from . import models
-from TestingApp.models import GameSession 
+
 
 
 @admin.register(models.Category)
@@ -77,13 +77,25 @@ class AnswerAdmin(admin.ModelAdmin):
     
     list_filter = ['question', 'is_right']
 
-@admin.register(GameSession) 
+@admin.register(models.Leaderboard) 
 
-class GameSessionAdmin(admin.ModelAdmin):
+class LeaderboardAdmin(admin.ModelAdmin):
     list_display = [
         'user',
-        'quiz',
-        'datetime',
         'score',
-        'totalTime'
+       
     ]
+
+    list_filter = ['user', 'score']
+
+@admin.register(models.Session) 
+
+class SessionAdmin(admin.ModelAdmin):
+    list_display = [
+        'QuizID',
+        'Participants',
+        'UserScores',
+        'QuizType',
+    ]
+
+    list_filter = ['QuizID', 'QuizType', 'Participants']

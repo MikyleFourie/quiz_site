@@ -82,6 +82,19 @@ def quiz(request, title):
     
     return render(request, 'userProfiles/quiz.html', context)
 
+def leaderboard(request):
+    
+    leaderboard = Leaderboard.objects.all()
+    
+    # Pass the leaderboard data to the template
+    context = {'leaderboard': leaderboard}
+
+    # Render the template with the context
+    return render(request, 'userProfiles/leaderboard.html', context)
+
+
+
+
 
 #class QuizView(View):
     # def get(self, request, *args, **kwargs):
