@@ -1,5 +1,4 @@
 {% extends "master.html" %}
-{% csrf_token %}
 {% load static %}
 {% load i18n %}
 {% load allauth account %}
@@ -14,21 +13,21 @@
     {% endelement %}
     {% if not SOCIALACCOUNT_ONLY %}
         {% setvar link %}
-<a href="{{ signup_url }}">
-    {% endsetvar %}
-    {% setvar end_link %}
-</a>
+            <a href="{{ signup_url }}">
+            {% endsetvar %}
+            {% setvar end_link %}
+            </a>
         {% endsetvar %}
-<p>
-    {% blocktranslate %}If you have not created an account yet, then please {{ link }}register{{ end_link }} first.{% endblocktranslate %}
-</p>
+        <p>
+            {% blocktranslate %}If you have not created an account yet, then please {{ link }}sign up{{ end_link }} first.{% endblocktranslate %}
+        </p>
         {% url 'account_login' as login_url %}
         {% element form form=form method="post" action=login_url tags="entrance,login" %}
             {% slot body %}
                 {% csrf_token %}
                 {% element fields form=form unlabeled=True %}
                 {% endelement %}
-{{ redirect_field }}
+                {{ redirect_field }}
             {% endslot %}
             {% slot actions %}
                 {% element button type="submit" tags="prominent,login" %}
