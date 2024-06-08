@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             if (timeLeft <= 0) {
                 clearInterval(timer);
                 quizSocket.send(JSON.stringify({
-                    'type': 'timer_expired', // Send a message to indicate timer expiry
+                    'type': 'timer_expired',
                 }));
             }
         }, 1000);
@@ -82,35 +82,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     function updateUserList(users) {
         user_ul_element.innerHTML = '';
-        users.forEach(user => {
+        users.forEach((user) => {
             const li = document.createElement('li');
-            li.setAttribute("id", `username-${user.username}`);
             li.innerText = `${user.username}: ${user.score}`;
-            if (user.score !== undefined) {
-                li.classList.add('chosen'); // Change color if user has made a choice
-            }
             user_ul_element.appendChild(li);
         });
     }
 
     function handleUserSelection(username) {
-        const usernameElement = document.getElementById(`username-${username}`);
-        if (usernameElement) {
-            usernameElement.classList.add('chosen');
+        const user_li_element = document.querySelector(`#user_list li[data-username="${username}"]`);
+        if (user_li_element) {
+            user_li_element.classList.add('answered');
         }
     }
 
     function endQuiz(final_scores) {
         clearInterval(timer);
-        alert("Quiz ended! Final scores: " + JSON.stringify(final_scores));
+        question_text_element.innerText = 'Quiz Finished!';
+        answers_ul_element.innerHTML = '';
+
+        final_scores.forEach((user) => {
+            const li = document.createElement('li');
+            li.innerText = `${user.username}: ${user.score}`;
+            user_ul_element.appendChild(li);
+        });
     }
-
-    quizSocket.onopen = function () {
-        console.log('Connected to the quiz.');
-    };
-
-    quizSocket.onclose = function (e) {
-        console.log('Disconnected from the quiz.');
-    };
 });
-
