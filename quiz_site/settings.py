@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
-import secrets
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,19 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = "django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v"
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    default=secrets.token_urlsafe(nbytes=64),
-)
+SECRET_KEY = "django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v"
 
 # SECiRITY WARNING: don't run with debug turned on in production!
-#DEBUG = os.environ.get("DEBUG", "False") == "True"
-#print(f"DEBUG is set to {DEBUG}")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+print(f"DEBUG is set to {DEBUG}")
 # This makes the DEBUG variable set dynamically depending on the environment.
 # The local server should be set to True. The Heroku server should be set to False
 
-DEBUF =False
+
 IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
