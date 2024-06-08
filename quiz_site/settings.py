@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get(
 # This makes the DEBUG variable set dynamically depending on the environment.
 # The local server should be set to True. The Heroku server should be set to False
 
-
+DEBUF =False
 IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
