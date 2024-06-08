@@ -90,7 +90,7 @@ def leaderboard(request):
     context = {'leaderboard': leaderboard}
 
     # Render the template with the context
-    return render(request, 'leaderboard.html', context)
+    return render(request, 'userProfiles/leaderboard.html', context)
 
 
 
