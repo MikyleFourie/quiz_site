@@ -1,6 +1,5 @@
 import asyncio
 import json
-
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
@@ -61,7 +60,6 @@ class QuizConsumer(AsyncWebsocketConsumer):
 
     async def start_timer(self):
         print("timer started")
-
         await asyncio.sleep(15)  # 15-second timer
         print("timer ended")
         if self.all_answers_received:
@@ -79,10 +77,12 @@ class QuizConsumer(AsyncWebsocketConsumer):
 
         session = self.scope['session']
         self.question_ids = session.get('question_ids', [])
+
         if not self.question_ids:
             await self.close()
             return
 
+        
         await self.accept()
 
         await self.load_initial_game_state()
@@ -110,16 +110,17 @@ class QuizConsumer(AsyncWebsocketConsumer):
         user_action = text_data_json.get('type')
 
         if user_action == 'answer_selected':
-            QuizConsumer.users_completed += 1
-            
             # Broadcast user's selection to all connected users
             username = self.username
-            await self.broadcast_user_selection(username)
             self.answer_id = text_data_json.get('answer_id')
+            QuizConsumer.users_completed += 1
+            await self.broadcast_user_list()
+            await self.broadcast_user_selection(username)
             
             #scoring logic
             
             if QuizConsumer.users_completed >= QuizConsumer.total_users:
+                self.all_answers_received = True
                 #Get users answer and correct answer
                 
                 #correct_answer = QuizConsumer.game_state.answers.filter(is_correct=True).first()
@@ -133,12 +134,12 @@ class QuizConsumer(AsyncWebsocketConsumer):
                 #Progresses to next question?
                 
 
+
                 # Process user answers before moving to the next question
-                for consumer in QuizConsumer.connected_users.values():
-                    await consumer.process_user_answer()
+                
 
                 # Reset users_completed to 0 for the next question
-                QuizConsumer.users_completed = 0
+                #QuizConsumer.users_completed = 0
 
                 #if not at the end of quiz
                 #if QuizConsumer.game_state['current_question'] < len(self.question_ids):
@@ -182,12 +183,12 @@ class QuizConsumer(AsyncWebsocketConsumer):
                 self.all_answers_received = False
             else:
                 # No more questions, handle the end of the quiz
-
                 await self.end_quiz()
         else:
             # If move_to_next_question is False, it means the timer expired
             # In this case, process the user answers and move to the next question
             await self.process_user_answers(move_to_next_question=True)
+
     @sync_to_async
     def update_game_state(self):
         if QuizConsumer.game_state['current_question'] < len(self.question_ids):
@@ -224,5 +225,16 @@ class QuizConsumer(AsyncWebsocketConsumer):
             'users': user_list
         }
 
+        for consumer in QuizConsumer.connected_users.values():
+            await consumer.send(text_data=json.dumps(message))
+
+    async def broadcast_user_selection(self, username):
+
+        message = {'type': 'user_selection',
+
+            'username': username,
+
+        }        
+        
         for consumer in QuizConsumer.connected_users.values():
             await consumer.send(text_data=json.dumps(message))
