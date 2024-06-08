@@ -44,7 +44,10 @@ class QuizConsumer(AsyncWebsocketConsumer):
             await consumer.send(text_data=json.dumps(message))
 
     async def start_timer(self):
+        print("timer started")
+
         await asyncio.sleep(15)  # 15-second timer
+        print("timer ended")
         if self.all_answers_received:
             await self.process_user_answers(move_to_next_question=True)  # Process if all answers are received
         else:
@@ -70,9 +73,16 @@ class QuizConsumer(AsyncWebsocketConsumer):
         await self.broadcast_game_state()
         await self.broadcast_user_list()
 
-        if QuizConsumer.total_users == 1:
-            if not self.timer_task or self.timer_task.done():  # Check if no timer task or the previous task is done
-                self.timer_task = asyncio.create_task(self.start_timer())  # Start the timer for solo play
+        if QuizConsumer.total_users >= 1:
+            if not QuizConsumer.timer_task or QuizConsumer.timer_task.done():  # Check if no timer task or the previous task is done
+                print("timer if statement")
+
+                QuizConsumer.timer_task = asyncio.create_task(self.start_timer())  # Start the timer for solo play
+ 
+            #if not self.timer_task or self.timer_task.done():  # Check if no timer task or the previous task is done
+                #print("timer if statement")
+
+                #self.timer_task = asyncio.create_task(self.start_timer())  # Start the timer for solo play
 
     async def disconnect(self, close_code):
         if self.username in QuizConsumer.connected_users:
@@ -86,6 +96,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
         user_action = text_data_json.get('type')
 
         if user_action == 'answer_selected':
+            print("single answer selected")
             self.answer_id = text_data_json.get('answer_id')
             QuizConsumer.users_completed += 1  # Increment users_completed when a user submits an answer
 
@@ -95,6 +106,8 @@ class QuizConsumer(AsyncWebsocketConsumer):
             # If all users have submitted their answers, set the flag
             if QuizConsumer.users_completed >= QuizConsumer.total_users:
                 self.all_answers_received = True
+                print("all answers rec")
+
 
     @sync_to_async
     def process_user_answer(self):
