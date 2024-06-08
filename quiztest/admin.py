@@ -79,9 +79,23 @@ class AnswerAdmin(admin.ModelAdmin):
 
 @admin.register(models.Leaderboard) 
 
-class Leaderboard(admin.ModelAdmin):
+class LeaderboardAdmin(admin.ModelAdmin):
     list_display = [
         'user',
         'score',
        
     ]
+
+    list_filter = ['user', 'score']
+
+@admin.register(models.Session) 
+
+class SessionAdmin(admin.ModelAdmin):
+    list_display = [
+        'QuizID',
+        'Participants',
+        'UserScores',
+        'QuizType',
+    ]
+
+    list_filter = ['QuizID', 'QuizType', 'Participants']
