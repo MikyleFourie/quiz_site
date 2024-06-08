@@ -7,8 +7,8 @@ from quiztest.models import *
 
 class QuizConsumer(AsyncWebsocketConsumer):
     connected_users = {}
-    users_completed = 0
     total_users = 0
+    users_completed = 0
     user_scores = {}
     game_state = {
         'current_question': 0,
@@ -45,8 +45,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
 
     async def start_timer(self):
         await asyncio.sleep(15)  # 15-second timer
-        if QuizConsumer.users_completed < QuizConsumer.total_users:
-            await self.process_user_answers(move_to_next_question=True)
+        await self.process_user_answers()  # Process user answers when timer expires
 
     async def connect(self):
         self.room_group_name = 'quiz_group'
@@ -84,43 +83,25 @@ class QuizConsumer(AsyncWebsocketConsumer):
         user_action = text_data_json.get('type')
 
         if user_action == 'answer_selected':
-            QuizConsumer.users_completed += 1
-
-            username = self.username
-            await self.broadcast_user_selection(username)
             self.answer_id = text_data_json.get('answer_id')
+            QuizConsumer.users_completed += 1  # Increment users_completed when a user submits an answer
 
+            # Broadcast user list to update UI with the latest scores
+            await self.broadcast_user_list()
+
+            # Process user answers when all users have submitted their answers
             if QuizConsumer.users_completed >= QuizConsumer.total_users:
-                if self.timer_task:
-                    self.timer_task.cancel()  # Cancel the current timer
-                await self.process_user_answers(move_to_next_question=True)
-                if not self.timer_task or self.timer_task.done():  # Start new timer only if no previous task or it's done
-                    self.timer_task = asyncio.create_task(self.start_timer())  # Start the timer for the next question
+                await self.process_user_answers()
 
     async def process_user_answers(self, move_to_next_question=False):
-        correct_answer_id = None
-        for answer in QuizConsumer.game_state['answers']:
-            if answer["is_right"]:
-                correct_answer_id = answer['id']
-                break
-
-        question_id = self.question_ids[QuizConsumer.game_state['current_question']]
-        question = await sync_to_async(Question.objects.get)(id=question_id)
-
-        if correct_answer_id == self.answer_id:
-            if question.difficulty == 1:
-                self.score += 1
-            elif question.difficulty == 2:
-                self.score += 1.5
-            elif question.difficulty == 3:
-                self.score += 2
-
         if move_to_next_question:
             # Ensure we are within the range of questions
             if QuizConsumer.game_state['current_question'] < len(self.question_ids) - 1:
                 QuizConsumer.game_state['current_question'] += 1
-                QuizConsumer.users_completed = 0
                 self.answer_id = None  # Reset answer_id for the next question
+
+                # Reset users_completed to 0 for the next question
+                QuizConsumer.users_completed = 0
 
                 # Update game state and broadcast it
                 await self.update_game_state()
@@ -134,6 +115,10 @@ class QuizConsumer(AsyncWebsocketConsumer):
             else:
                 # No more questions, handle the end of the quiz
                 await self.end_quiz()
+        else:
+            # If move_to_next_question is False, it means the timer expired
+            # In this case, process the user answers and move to the next question
+            await self.process_user_answers(move_to_next_question=True)
 
     @sync_to_async
     def update_game_state(self):
@@ -152,14 +137,6 @@ class QuizConsumer(AsyncWebsocketConsumer):
         message = {
             'type': 'quiz_end',
             'final_scores': [{'username': username, 'score': consumer.score} for username, consumer in QuizConsumer.connected_users.items()]
-        }
-        for consumer in QuizConsumer.connected_users.values():
-            await consumer.send(text_data=json.dumps(message))
-
-    async def broadcast_user_selection(self, username):
-        message = {
-            'type': 'user_selection',
-            'username': username,
         }
         for consumer in QuizConsumer.connected_users.values():
             await consumer.send(text_data=json.dumps(message))

@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
 
         if (data.type === 'quiz_end') {
-            endQuiz(data.user_scores);
+            endQuiz(data.final_scores);
         }
     };
 
@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         'type': 'answer_selected',
                         'answer_id': answer.id,
                     }));
-                    clearInterval(timer);
                 }
             });
             answers_ul_element.appendChild(li);
@@ -87,6 +86,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const li = document.createElement('li');
             li.setAttribute("id", `username-${user.username}`);
             li.innerText = `${user.username}: ${user.score}`;
+            if (user.score !== undefined) {
+                li.classList.add('chosen'); // Change color if user has made a choice
+            }
             user_ul_element.appendChild(li);
         });
     }
@@ -98,9 +100,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    function endQuiz(user_scores) {
+    function endQuiz(final_scores) {
         clearInterval(timer);
-        alert("Quiz ended! Final scores: " + JSON.stringify(user_scores));
+        alert("Quiz ended! Final scores: " + JSON.stringify(final_scores));
     }
 
     quizSocket.onopen = function () {
@@ -111,3 +113,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.log('Disconnected from the quiz.');
     };
 });
+
