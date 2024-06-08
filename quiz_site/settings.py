@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = True
+#DEBUG = os.environ.get("DEBUG", "False") == "True"
 print(f"DEBUG is set to {DEBUG}")
 # This makes the DEBUG variable set dynamically depending on the environment.
 # The local server should be set to True. The Heroku server should be set to False
