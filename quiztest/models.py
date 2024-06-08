@@ -89,17 +89,33 @@ class Answer(models.Model):
     
 
 class Leaderboard(models.Model):
+    class Meta:
+        verbose_name = _("Leaderboard")
+        ordering = ['score']
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
+
+   
     
 
 class Session(models.Model):
+    
+    class Meta:
+        verbose_name = _("Session")
+        verbose_name_plural = _("Sessions")
+        ordering = ['id']
+
+
     QuizID = models.ForeignKey(Quizzes, on_delete=models.CASCADE)
     
     Participants = ArrayField(models.CharField(max_length=255, blank=True))
     UserScores = ArrayField(models.IntegerField(blank=True))
 
     QuizType = models.CharField(max_length= 255, null=True)
+
+
+    
 
    # @property
     #def QuizType(self):
