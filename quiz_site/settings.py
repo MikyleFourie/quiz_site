@@ -206,7 +206,7 @@ SOCIALACCOUNT_PROVIDERS = {
         "VERIFIED_EMAIL": True,
     },
 }
-CSRF_TRUSTED_ORIGINS =['https://*.heroku.com']
+CSRF_TRUSTED_ORIGINS =['https://*.herokuapp.com']
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
