@@ -93,7 +93,6 @@ class Leaderboard(models.Model):
         verbose_name = _("Leaderboard")
         ordering = ['score']
 
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
 

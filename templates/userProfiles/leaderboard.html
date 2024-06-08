@@ -23,11 +23,11 @@
             <th>Player</th>
             <th>Score</th>
         </tr>
-        {% for session in leaderboard %}
+        {% for entry in leaderboard %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ session.user}}</td>  <!-- assuming 'player' is a foreign key to a Player model -->
-            <td>{{ session.score }}</td>
+            <td>{{ entry.username}}</td>  <!-- assuming 'player' is a foreign key to a Player model -->
+            <td>{{ entry.highest_score }}</td>
         </tr>
         {% endfor %}
     </table>
