@@ -273,7 +273,7 @@ a:link, a:visited {
 
 .quizCard {
     background-color: #f1f1f1;
-    background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
+    background-image: linear-gradient(to bottom, #dc37be, #4D70EF); /*change colour for type of quiz*/
     background-size: 100% 200px;
     background-repeat: no-repeat;
     height: 90vh;
@@ -309,6 +309,30 @@ a:link, a:visited {
         margin: 0;
         border-radius: 5px;
     }
+    /* Define different background colors based on the quiz category */
+.quizCard.art {
+    background-image: linear-gradient(to bottom, #FF7E7E, #4D70EF);
+}
+
+.quizCard.science {
+    background-image: linear-gradient(to bottom, #A1FF7E, #4D70EF);
+}
+
+.quizCard.history {
+    background-image: linear-gradient(to bottom, #FFE27E, #4D70EF);
+}
+
+.quizCard.sport {
+    background-image: linear-gradient(to bottom, #FFCE7E, #4D70EF);
+}
+
+.quizCard.geography {
+    background-image: linear-gradient(to bottom, #7EBEFF, #4D70EF);
+}
+
+.quizCard.entertainment {
+    background-image: linear-gradient(to bottom, #FF7EE7, #4D70EF);
+}
 
 .toggled {
     background-color: cornflowerblue;
