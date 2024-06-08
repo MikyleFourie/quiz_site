@@ -7,6 +7,11 @@
 
 {% block hAdd%} 
 <script src="{% static 'quiz.js' %}" defer></script>
+<script>
+    const quizTitle = "{{ quiz_title }}";
+    const sessionId = "{{ session_id }}";
+
+</script>
 {% endblock %}
 
 {% block content %}
@@ -14,31 +19,18 @@
 
     <div class="playerColumn">
         <h3>Number of Users: <span id="numOfUsers"></span></h3>
-        <ul id="user_list">
-            
-        </ul>
-
+        <ul id="user_list">     </ul>
     </div>
 
     <div class="quizCard">
         <h2>Q <span id="current-question"></span>/10 - <span id="quiz-type"> {{ quiz_type }}</span></h2>
-        <h1 id="question-text"></h1>
-        
+        <h1 id="question-text">     </h1>
         <ul class="q" id="answers-list">
             <!--<li>Answer A</li>
             <li>Answer B</li>
             <li>Answer C</li>
             <li>Answer D</li>-->
-            
         </ul>
-
-        <!--<form id="quizForm" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-        </form>
-
-        <p id="trbl"></p>-->
-        
     </div>
 
     <div class="chatColumn">

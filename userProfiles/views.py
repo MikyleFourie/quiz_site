@@ -2,7 +2,7 @@ from re import template
 import random
 from django import http
 import django
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.forms import UserCreationForm
@@ -67,20 +67,41 @@ def qSelect(request):
     return HttpResponse(template.render())
 
 def quiz(request, title):
-    
-    quiz = Quizzes.objects.get(title=title)
-    questions = list(quiz.question.all())
-    question_ids = random.sample([q.id for q in questions], 10)
+    quiz = get_object_or_404(Quizzes, title=title)
 
-    request.session['question_ids'] = question_ids
-    # request.session['current_question_index'] = 0
-    # request.session['score'] = 0
-    
-    context = {
-        'quiz_title': title,
-    }
+    #Try find first available session
+    session = Session.objects.filter(QuizID=quiz, QuizType=title).exclude(Participants__len=MAX_PARTICIPANTS).first()
+    if not session:
+        #Create a new session if no others are available
+        session = Session.objects.create(QuizID=quiz, QuizType=title, Participants=[], UserScores=[])
+
+    #Add current user to the session
+    if session.add_participant(request.user.username):
+        request.session['session_id'] = session.id
+        question_ids = random.sample([q.id for q in quiz.question.all()], 10)
+        request.session['question_ids'] = question_ids
+
+        context = {
+            'quiz_title': title,
+            'session_id': session.id
+        }
+    else:
+        return redirect('quizSelect') #not sure if this line works
     
     return render(request, 'userProfiles/quiz.html', context)
+
+
+    # quiz = Quizzes.objects.get(title=title)
+    # questions = list(quiz.question.all())
+    # question_ids = random.sample([q.id for q in questions], 10)
+
+    # request.session['question_ids'] = question_ids
+    
+    # context = {
+    #     'quiz_title': title,
+    # }
+    
+    # return render(request, 'userProfiles/quiz.html', context)
 
 def leaderboard(request):
     

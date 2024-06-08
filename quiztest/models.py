@@ -3,6 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 
+MAX_PARTICIPANTS = 4
+
+
+
 class Category(models.Model):
 
     name = models.CharField(max_length=255, null=True)
@@ -101,7 +105,7 @@ class Leaderboard(models.Model):
     
 
 class Session(models.Model):
-    
+    #Change MAX_PARTICIPANTS constant at the top to change how many players per session
     class Meta:
         verbose_name = _("Session")
         verbose_name_plural = _("Sessions")
@@ -109,14 +113,19 @@ class Session(models.Model):
 
 
     QuizID = models.ForeignKey(Quizzes, on_delete=models.CASCADE)
-    
     Participants = ArrayField(models.CharField(max_length=255, blank=True))
     UserScores = ArrayField(models.IntegerField(blank=True))
-
     QuizType = models.CharField(max_length= 255, null=True)
 
-
+    def add_participant(self, username):
+        if len(self.Participants) < MAX_PARTICIPANTS:
+            self.Participants.append(username)
+            self.save()
+            return True
+        return False
     
+    def is_full(self):
+        return len(self.Participants) >= MAX_PARTICIPANTS;    
 
    # @property
     #def QuizType(self):

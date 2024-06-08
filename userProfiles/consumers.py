@@ -1,4 +1,3 @@
-from sqlite3 import complete_statement
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import sync_to_async
@@ -70,10 +69,17 @@ class QuizConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         
         self.room_group_name = 'quiz_group'
-        
-        #NEW LOGIC
         self.username = self.scope['user'].username
+        self.session_id = self.scope['url_route']['kwargs']['session_id']
         self.score = 0
+        
+        #Get session from the database
+        self.session = await self.get_session(self.session_id)
+        if self.session is None or self.session.is_full():
+            await self.close()
+            return
+
+
         QuizConsumer.connected_users[self.username] = self #Need to write this line again everytime we want to update the connected_users
         QuizConsumer.total_users += 1
 
@@ -85,12 +91,9 @@ class QuizConsumer(AsyncWebsocketConsumer):
             return
 
         await self.accept()
-       
-        #calls load intial game state func
-        await self.load_initital_game_state()
-        #calls broadcast game state func
+        await self.load_initital_game_state() #calls load intial game state func
         await self.broadcast_game_state()
-        await self.broadcast_user_list()
+        await self.broadcast_user_list() #broadcasts to users
         
 
 #----------------------------------------------
@@ -174,8 +177,12 @@ class QuizConsumer(AsyncWebsocketConsumer):
         QuizConsumer.game_state['answers'] = answers_list
 
         
-                
-            
+    @database_sync_to_async
+    def get_session(self, session_id):
+        try:
+            return Session.objects.get(id=session_id)
+        except Session.DoesNotExist:
+            return None
             
 
     async def broadcast_user_selection(self, username):

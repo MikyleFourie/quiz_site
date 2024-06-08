@@ -1,18 +1,18 @@
 
 document.addEventListener('DOMContentLoaded', (event) => {
-
+   //Commenting out for a cleaner method
     // Extract the quiz title from the current URL
-    const pathParts = window.location.pathname.split('/');
-    const quizTitle = pathParts[pathParts.length - 2]; // Assuming URL ends with quiz/<title>/
+        //const pathParts = window.location.pathname.split('/');
+        //const quizTitle = pathParts[pathParts.length - 2]; // Assuming URL ends with quiz/<title>/
+    //----------------------------------------------
 
     // Get the protocol of the current window
     const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 
     // Construct the WebSocket URL
-    //const quizSocket = new WebSocket('ws://' + window.location.host + '/ws/quiz/'+ quizTitle + '/');
-    //const quizSocket = new WebSocket(  'wss://' + window.location.host + '/wss/quiz/' + quizTitle + '/');
     //has to match with:                wss://ppg-quiz-site-265ccf6f2c38.herokuapp.com/wss/quiz/Art/
-    const quizSocket = new WebSocket(protocol + window.location.host + '/ws/quiz/' + quizTitle + '/');
+    //const quizSocket = new WebSocket(protocol + window.location.host + '/ws/quiz/' + quizTitle + '/');
+    const quizSocket = new WebSocket(protocol + window.location.host + '/ws/quiz/' + quizTitle + '/' + sessionId + '/');
 
 
     //Get all HTML containers we need to manipulate
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const answers_ul_element = document.getElementById('answers-list');
     const user_ul_element = document.getElementById('user_list');
     const numOfUsers_element = document.getElementById('numOfUsers');
-
+    //Difficulty rating element
     
 
 
@@ -45,14 +45,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
             question_text_element.innerText = gameState.question;
             numOfUsers_element.innerText = gameState.numOfUsers;
 
-            answers = gameState.answers;
+            const answers = gameState.answers;
             answers_ul_element.innerHTML = '';
             answers.forEach((answer, index) => {
                 const li = document.createElement('li');
                 li.innerText = answer.text;
                 li.classList.add('unselected')
 
-                //li.addEventListener('click', optionHandler);
                 li.addEventListener('click', function clickHandler() {
                     if (this.classList.contains('unselected')) {
                         console.log("answer with ID:", answer.id);
@@ -75,12 +74,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 });
                 answers_ul_element.appendChild(li);
             });
-            //addAnswerListeners();
+
         }
 
         if (data.type === 'question_ids') {
             console.log("ping");
-            qIds = data.question_ids;
+            const qIds = data.question_ids;
 
             qIds.forEach((qId, index) => {
                 const li = document.createElement('li');
@@ -123,16 +122,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 usernameElement.classList.remove('chosen');
             }
         }
-        
-
-        
-
-
 
     };
 
-
-    
 
 });
 
