@@ -86,6 +86,7 @@ def leaderboard(request):
 
     # Get the highest score for each user
     highest_scores = Leaderboard.objects.values('user__username').annotate(max_score=Max('score'))
+    print(Leaderboard.objects.all().values())
 
     # Now `highest_scores` contains a queryset with each user's highest score
     # You can iterate through it to access user IDs and their corresponding highest scores

@@ -23,7 +23,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
     total_users = 0
     users_completed = 0
     #global game_state
-    user_scores = {}
+    #user_scores = {}
     game_state = {
         'current_question': 0,
         'quizType': '',
@@ -205,8 +205,12 @@ class QuizConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def update_score_in_db(self):
         leaderboard_entry, created = Leaderboard.objects.get_or_create(user=self.scope['user'])
-        leaderboard_entry.score = self.score
-        leaderboard_entry.save()
+        print(leaderboard_entry.score)
+        if leaderboard_entry.score < self.score:
+            leaderboard_entry.score = self.score
+            leaderboard_entry.save()
+        
+        
 
     async def end_quiz(self):
         await self.update_score_in_db()
