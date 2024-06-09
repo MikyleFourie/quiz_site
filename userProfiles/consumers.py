@@ -4,7 +4,6 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
 from quiztest.models import *
-from django.utils import timezone
 
 class QuizConsumer(AsyncWebsocketConsumer):
     # Maximum number of users required to start the quiz
@@ -207,7 +206,6 @@ class QuizConsumer(AsyncWebsocketConsumer):
         # Close the quiz session
         session = Session.objects.get(id=self.session_id)
         session.QuizStatus = "CLOSED"
-        session.session_time=timezone.now()
         session.save()
 
     async def end_quiz(self):
