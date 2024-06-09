@@ -6,7 +6,6 @@ from . import models
 #The search_fields attribute allows you to define which fields on the model should be searched when you use the search box at the top of the admin change list page.
 
 @admin.register(models.Category)
-
 class CategoryAdmin(admin.ModelAdmin):
     list_display = [
         'name',
@@ -66,7 +65,6 @@ class QuestionAdmin(admin.ModelAdmin):
     list_filter = ['quiz', 'typeOfQ', 'difficulty']
 
 @admin.register(models.Answer) 
-
 class AnswerAdmin(admin.ModelAdmin):
     list_display = [
         'answer_text',
@@ -79,7 +77,6 @@ class AnswerAdmin(admin.ModelAdmin):
     list_filter = ['question', 'is_right']
 
 @admin.register(models.Leaderboard) 
-
 class LeaderboardAdmin(admin.ModelAdmin):
     list_display = [
         'user',
