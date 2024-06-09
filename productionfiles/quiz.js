@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', (event) => {
    //Commenting out for a cleaner method
     // Extract the quiz title from the current URL
@@ -25,106 +24,102 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //Difficulty rating element
     
 
+    const timer_element = document.getElementById('timer-count');
+
+    let timer;
+    let timeLeft;
 
     quizSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
 
-        //if (data.type == 'check') {
-        //    const message = data['message'];
-        //    console.log(message)
-
-        //    document.getElementById('trbl').innerText = message;
-        //}
-
-        
-        
         if (data.type === 'game_state') {
-            const gameState = data.game_state
-            current_question_num_element.innerText = gameState.current_question + 1;
-            current_quiz_type_element.innerText = gameState.quizType;
-            question_text_element.innerText = gameState.question;
-            numOfUsers_element.innerText = gameState.numOfUsers;
-
-            const answers = gameState.answers;
-            answers_ul_element.innerHTML = '';
-            answers.forEach((answer, index) => {
-                const li = document.createElement('li');
-                li.innerText = answer.text;
-                li.classList.add('unselected')
-
-                li.addEventListener('click', function clickHandler() {
-                    if (this.classList.contains('unselected')) {
-                        console.log("answer with ID:", answer.id);
-                        console.log("--------");
-                        const selectedOption = this; 
-
-                        answers_ul_element.querySelectorAll('li').forEach(item => {
-                            item.classList.remove('unselected');
-                        });
-
-                        // Add 'toggled' class to the clicked item
-                        this.classList.add('toggled');
-
-                        // Send the selected answer to the server
-                        quizSocket.send(JSON.stringify({
-                            'type': 'answer_selected',
-                            'answer_id': answer.id,
-                        }));
-                    }                                 
-                });
-                answers_ul_element.appendChild(li);
-            });
-
+            const gameState = data.game_state;
+            updateGameState(gameState);
         }
 
-        if (data.type === 'question_ids') {
-            console.log("ping");
-            const qIds = data.question_ids;
-
-            qIds.forEach((qId, index) => {
-                const li = document.createElement('li');
-                li.innerText = qId;
-                answers_ul_element.appendChild(li);
-            });
-
-        }
-        
         if (data.type === 'user_list') {
-            ////Recieves 'user-list' broadcast. Handle user list update
-            userList = data.user_list; //Gets user_list from broadcast
-            user_ul_element.innerHTML = '';  // Clear the current list
-
-            data.users.forEach(user => {
-                const li = document.createElement('li');
-                li.setAttribute("id", `username-${user.username}`);
-                li.innerText = `${user.username}: ${user.score}`;
-                user_ul_element.appendChild(li);
-                console.log(`Name:${user.username} Score:${user.score}`);
-            });
+            updateUserList(data.users);
         }
 
-        //should activate when a user makes selection
         if (data.type === 'user_selection') {
-            username = data.username;
-
-            // Update UI to indicate user selection
-            const usernameElement = document.getElementById(`username-${username}`);
-            if (usernameElement) {
-                usernameElement.classList.add('chosen');
-            }
+            handleUserSelection(data.username);
         }
 
-        if (data.type === 'score_update') {
-            username = data.username;
-
-            const usernameElement = document.getElementById(`username-${username}`);
-            if (usernameElement) {
-                usernameElement.classList.remove('chosen');
-            }
+        if (data.type === 'quiz_end') {
+            endQuiz(data.final_scores);
         }
-
     };
 
+    function updateGameState(gameState) {
+        current_question_num_element.innerText = gameState.current_question + 1;
+        current_quiz_type_element.innerText = gameState.quizType;
+        question_text_element.innerText = gameState.question;
+        numOfUsers_element.innerText = gameState.numOfUsers;
 
+        answers_ul_element.innerHTML = '';
+        gameState.answers.forEach((answer) => {
+            const li = document.createElement('li');
+            li.innerText = answer.text;
+            li.classList.add('unselected');
+            li.addEventListener('click', function clickHandler() {
+                if (this.classList.contains('unselected')) {
+                    answers_ul_element.querySelectorAll('li').forEach(item => {
+                        item.classList.remove('unselected');
+                    });
+                    this.classList.add('toggled');
+                    quizSocket.send(JSON.stringify({
+                        'type': 'answer_selected',
+                        'answer_id': answer.id,
+                    }));
+                }
+            });
+            answers_ul_element.appendChild(li);
+        });
+
+        startTimer(15); // Start the timer for 15 seconds
+    }
+
+    function startTimer(seconds) {
+        clearInterval(timer);
+        timeLeft = seconds;
+        timer_element.innerText = timeLeft;
+        timer = setInterval(() => {
+            timeLeft -= 1;
+            timer_element.innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                quizSocket.send(JSON.stringify({
+                    'type': 'timer_expired',
+                }));
+            }
+        }, 1000);
+    }
+
+    function updateUserList(users) {
+        user_ul_element.innerHTML = '';
+        users.forEach((user) => {
+            const li = document.createElement('li');
+            li.innerText = `${user.username}: ${user.score}`;
+            user_ul_element.appendChild(li);
+        });
+    }
+
+    function handleUserSelection(username) {
+        const user_li_element = document.querySelector(`#user_list li[data-username="${username}"]`);
+        if (user_li_element) {
+            user_li_element.classList.add('answered');
+        }
+    }
+
+    function endQuiz(final_scores) {
+        clearInterval(timer);
+        question_text_element.innerText = 'Quiz Finished!';
+        answers_ul_element.innerHTML = '';
+
+        final_scores.forEach((user) => {
+            const li = document.createElement('li');
+            li.innerText = `${user.username}: ${user.score}`;
+            user_ul_element.appendChild(li);
+        });
+    }
 });
-

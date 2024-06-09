@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from allauth.socialaccount.forms import SignupForm
 from django.views import View
-
+from django.db.models import Max
 
 import userProfiles
 from quiztest.models import *
@@ -104,11 +104,24 @@ def quiz(request, title):
     # return render(request, 'userProfiles/quiz.html', context)
 
 def leaderboard(request):
-    
-    leaderboard = Leaderboard.objects.all()
-    
+
+    # Get the highest score for each user
+    highest_scores = Leaderboard.objects.values('user__username').annotate(max_score=Max('score'))
+
+    # Now `highest_scores` contains a queryset with each user's highest score
+    # You can iterate through it to access user IDs and their corresponding highest scores
+    leaderboard = []
+    for entry in highest_scores:
+        user= entry['user__username']
+        highest_score = entry['max_score']
+        leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)
+        leaderboard.append({'username': user, 'highest_score': highest_score})
+
+
     # Pass the leaderboard data to the template
-    context = {'leaderboard': leaderboard}
+    context = {
+        'leaderboard':leaderboard
+        }
 
     # Render the template with the context
     return render(request, 'userProfiles/leaderboard.html', context)

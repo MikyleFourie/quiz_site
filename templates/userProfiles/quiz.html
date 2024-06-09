@@ -5,7 +5,7 @@
   Screen to select a Quiz
 {% endblock %}
 
-{% block hAdd%} 
+{% block hAdd %} 
 <script src="{% static 'quiz.js' %}" defer></script>
 <script>
     const quizTitle = "{{ quiz_title }}";
@@ -16,31 +16,24 @@
 
 {% block content %}
 <div class="big">
-
     <div class="playerColumn">
         <h3>Number of Users: <span id="numOfUsers"></span></h3>
-        <ul id="user_list">     </ul>
+        <ul id="user_list"></ul>
     </div>
 
-    <div class="quizCard">
-        <h2>Q <span id="current-question"></span>/10 - <span id="quiz-type"> {{ quiz_type }}</span></h2>
-        <h1 id="question-text">     </h1>
-        <ul class="q" id="answers-list">
-            <!--<li>Answer A</li>
-            <li>Answer B</li>
-            <li>Answer C</li>
-            <li>Answer D</li>-->
-        </ul>
+    <div class="quizCard {% if quiz_title == 'Art' %}art{% elif quiz_title == 'Science' %}science{% elif quiz_title == 'History' %}history{% elif quiz_title == 'Sport' %}sport{% elif quiz_title == 'Geography' %}geography{% elif quiz_title == 'Entertainment' %}entertainment{% endif %}">
+        <h2>Q <span id="current-question"></span>/10 - <span id="quiz-type">{{ quiz_title }}</span></h2>
+        <h1 id="question-text"></h1>
+        
+        <ul class="q" id="answers-list"></ul>
+
+        <div id="timer">
+            <p>Time left: <span id="timer-count">15</span> seconds</p>
+        </div> <!-- Timer will be displayed here -->
     </div>
 
     <div class="chatColumn">
-
         <p>CHAT GOES HERE</p>
-        <!--<p>{{quiz_title}}</p>-->
-
     </div>
-
 </div>
-
-
 {% endblock %}
