@@ -115,7 +115,7 @@ def quiz(request, title, session_id):
 def leaderboard(request):
 
     # Get the highest score for each user
-    highest_scores = Leaderboard.objects.values('user__username').annotate(max_score=Max('score'))
+    highest_scores = list(Leaderboard.objects.values('user__username').annotate(max_score=Max('score')))
    
 
     # Now `highest_scores` contains a queryset with each user's highest score
@@ -129,6 +129,18 @@ def leaderboard(request):
 
     #the list is sorted after the iteration so that most recent entry is accounted for. User with the highest score overall sits at the top 
     leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)
+
+    # Calculate the rank for each user
+    rank = 0
+    prev_score = None
+    for i,entry in enumerate(leaderboard):
+        if entry['highest_score'] != prev_score: #rank increments
+            rank +=1
+            prev_score = entry['highest_score']
+        entry['rank'] = rank
+
+
+
     # Pass the leaderboard list to the template
     context = {
         'leaderboard':leaderboard

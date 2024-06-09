@@ -18,7 +18,7 @@
         </tr>
         {% for entry in leaderboard %}
         <tr>
-            <td>{{ forloop.counter }}</td> <!--this is a counter for the rank of the user. -->
+            <td>{{ entry.rank }}</td> <!--this is a counter for the rank of the user. -->
             <td>{{ entry.username}}</td>  <!--'USER' is a foreign key to a All Auth User model -->
             <td>{{ entry.highest_score }}</td><!--highest score of the user-->
         </tr>
