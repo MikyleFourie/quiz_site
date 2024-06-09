@@ -137,4 +137,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
             li.innerText = `${user.username}: ${user.score}`;
             answers_ul_element.appendChild(li);
         });
-    }
+    }})
