@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.contrib import admin
-from django.utils import timezone
 
 MAX_PARTICIPANTS = 4
 
@@ -93,7 +92,17 @@ class Answer(models.Model):
     def __str__(self):
         return self.answer_text 
     
+#leaderboard model has a user and score attribute 
+class Leaderboard(models.Model):
+    class Meta:
+        verbose_name = _("Leaderboard")
+        ordering = ['score']
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+
+   
+    
 
 class Session(models.Model):
     #Change MAX_PARTICIPANTS constant at the top to change how many players per session
@@ -109,7 +118,7 @@ class Session(models.Model):
     QuizType = models.CharField(max_length= 255, null=True)
     QuizStatus = models.CharField(max_length= 255, null=True, default='OPEN')
     #QuizStatus should ONLY be OPEN or CLOSED
-    session_time = models.DateTimeField(default=timezone.now)
+
     def add_participant(self, username):
         if len(self.Participants) < MAX_PARTICIPANTS:
             self.Participants.append(username)
@@ -121,17 +130,7 @@ class Session(models.Model):
         return len(self.Participants) >= MAX_PARTICIPANTS;    
 
 
-#leaderboard model has a user and score attribute 
-class Leaderboard(models.Model):
-    class Meta:
-        verbose_name = _("Leaderboard")
-        ordering = ['score']
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    score = models.IntegerField(default=0)
-
-   
-    
 
 #datetime for model session!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -150,6 +149,12 @@ class Leaderboard(models.Model):
 
  #session_time = models.DateTimeField()
 
+   # @property
+    #def QuizType(self):
+     #   return self.QuizID.title
+
+    #session = Session.objects.get(id=1)  # get a Book instance
+    #QuizType = session.author.name
 
 
 

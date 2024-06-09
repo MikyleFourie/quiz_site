@@ -19,6 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
    
 
 
+
 @admin.register(models.Quizzes)
 class QuizAdmin(admin.ModelAdmin):
     list_display = [
@@ -96,8 +97,7 @@ class SessionAdmin(admin.ModelAdmin):
         'Participants',
         'UserScores',
         'QuizType',
-        'QuizStatus',
-        'session_time',
+        'QuizStatus'
     ]
 
-    list_filter = ['QuizID', 'QuizType', 'Participants', 'session_time', 'QuizStatus']
+    list_filter = ['QuizID', 'QuizType', 'Participants']
