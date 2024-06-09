@@ -26,7 +26,7 @@
         {% for entry in leaderboard %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ entry.username}}</td>  <!--'player' is a foreign key to a Player model -->
+            <td>{{ entry.username}}</td>  <!--'USER' is a foreign key to a Player model -->
             <td>{{ entry.highest_score }}</td>
         </tr>
         {% endfor %}

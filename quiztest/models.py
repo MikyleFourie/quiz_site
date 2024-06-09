@@ -130,6 +130,8 @@ class Session(models.Model):
         return len(self.Participants) >= MAX_PARTICIPANTS;    
 
 
+
+
 #datetime for model session!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 #from datetime import datetime
