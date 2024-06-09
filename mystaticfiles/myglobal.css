@@ -86,7 +86,7 @@ body {
     text-align: center;
     }
 
-    li:hover {
+    .mycard li:hover {
         transform: scale(1.1);
     }
 
@@ -144,7 +144,58 @@ a:link, a:visited {
         margin-top: 5px;
     }
 
-    
+    .mycard2 li:hover {
+        transform: scale(1.1);
+    }
+
+
+.mycard3 {
+    background-color: #f1f1f1;
+    background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
+    background-size: 100% 120px;
+    background-repeat: no-repeat;
+    margin: 40px auto;
+    height: 70%;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    padding: 20px;
+}
+
+    .mycard3 h1 {
+        text-align: center;
+        color: #ffffff;
+        margin: 20px 0 60px 0;
+    }
+
+    .mycard3 ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mycard3 li {
+        background-color: #ffffff;
+        background-image: linear-gradient(to right, #375BDC, #4D70EF);
+        background-size: 50px 60px;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        transition: transform .25s;
+        border-radius: 5px;
+        box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+        padding: 15px;
+        padding-left: 70px;
+        margin-top: 5px;
+        text-align: center;
+    }
+
+    .mycard3 li {
+        transition: none;
+        transform: none;
+    }
+
+
+        
 
     #login {
         display: inline-flex;
@@ -309,6 +360,11 @@ a:link, a:visited {
         margin: 0;
         border-radius: 5px;
     }
+
+    .quizCard ul {
+        transition: none;
+        transform: none;
+    }
     /* Define different background colors based on the quiz category */
 .quizCard.art {
     background-image: linear-gradient(to bottom, #FF7E7E, #4D70EF);
@@ -341,6 +397,10 @@ a:link, a:visited {
 
 #correct {
     background-color: #00ef26;
+}
+
+#answered {
+
 }
 
 .q li {

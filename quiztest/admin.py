@@ -19,7 +19,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Quizzes)
-
 class QuizAdmin(admin.ModelAdmin):
     list_display = [
         'id',
@@ -89,13 +88,14 @@ class LeaderboardAdmin(admin.ModelAdmin):
     list_filter = ['user', 'score']
 
 @admin.register(models.Session) 
-
 class SessionAdmin(admin.ModelAdmin):
     list_display = [
+        'id',
         'QuizID',
         'Participants',
         'UserScores',
         'QuizType',
+        'QuizStatus'
     ]
 
     list_filter = ['QuizID', 'QuizType', 'Participants']

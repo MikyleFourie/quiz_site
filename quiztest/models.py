@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
+from django.contrib import admin
 
 MAX_PARTICIPANTS = 4
 
@@ -115,6 +116,8 @@ class Session(models.Model):
     Participants = ArrayField(models.CharField(max_length=255, blank=True))
     UserScores = ArrayField(models.IntegerField(blank=True))
     QuizType = models.CharField(max_length= 255, null=True)
+    QuizStatus = models.CharField(max_length= 255, null=True, default='OPEN')
+    #QuizStatus should ONLY be OPEN or CLOSED
 
     def add_participant(self, username):
         if len(self.Participants) < MAX_PARTICIPANTS:
@@ -125,6 +128,7 @@ class Session(models.Model):
     
     def is_full(self):
         return len(self.Participants) >= MAX_PARTICIPANTS;    
+
 
    # @property
     #def QuizType(self):
