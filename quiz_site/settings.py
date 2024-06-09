@@ -15,11 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-0x00mwi)77h00ks0!u++nd503yrq_v1c_*dsqaf22@d8j%qa^v"
 
 # SECiRITY WARNING: don't run with debug turned on in production!
@@ -28,13 +23,11 @@ print(f"DEBUG is set to {DEBUG}")
 # This makes the DEBUG variable set dynamically depending on the environment.
 # The local server should be set to True. The Heroku server should be set to False
 
-
+#checks whether this instance is local or Production
 IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
 # On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
-# validation of the Host header in the incoming HTTP request. On other platforms you may need to
-# list the expected hostnames explicitly in production to prevent HTTP Host header attacks. See:
-# https://docs.djangoproject.com/en/5.0/ref/settings/#std-setting-ALLOWED_HOSTS
+# validation of the Host header in the incoming HTTP request.
 if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["*"]
 else:
@@ -80,7 +73,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # allauth
     "allauth.account.middleware.AccountMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
@@ -188,10 +180,11 @@ DATABASES = {
         "CONN_MAX_AGE": 60,  # TEST 1 TO MAKE LOADING FASTER
     }
 }
-
+#Force AllAuth to send requests through https
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 SOCIALACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 
+#verification settings for OAuth Apps:
 SOCIALACCOUNT_PROVIDERS = {
     "github": {
         "APP": {
@@ -208,6 +201,7 @@ SOCIALACCOUNT_PROVIDERS = {
         "VERIFIED_EMAIL": True,
     },
 }
+#this allows the app to generate CSRF Tokens when deployed. Heroku blocks other heroku apps from generating our tokens.
 CSRF_TRUSTED_ORIGINS =['https://*.herokuapp.com']
 
 # Password validation
@@ -254,6 +248,7 @@ STATICFILES_DIRS = [BASE_DIR / "mystaticfiles"]
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 # allAuth Settings:
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"

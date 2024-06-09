@@ -64,6 +64,7 @@ def testing(request):
     return HttpResponse(template.render())
 
 def qSelect(request):
+    #This blocks access to quizes by unauthenticated users
     if not request.user.is_authenticated:
         return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     template = loader.get_template('userProfiles/quizSelection.html')
