@@ -63,8 +63,12 @@ def testing(request):
     return HttpResponse(template.render())
 
 def qSelect(request):
-    template = loader.get_template('userProfiles/quizSelection.html')
-    return HttpResponse(template.render())
+    if self.request.user.is_authenticated():
+        template = loader.get_template('userProfiles/quizSelection.html')
+        return HttpResponse(template.render())
+    else:
+        template = loader.get_template('userProfiles/login.html')
+        return HttpResponse(template.render())
 
 def quiz(request, title, session_id):
     quiz = get_object_or_404(Quizzes, title=title)
