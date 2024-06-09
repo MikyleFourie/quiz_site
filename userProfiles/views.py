@@ -10,7 +10,8 @@ from django.contrib.auth.models import User
 from allauth.socialaccount.forms import SignupForm
 from django.views import View
 from django.db.models import Max
-
+from django.conf import settings
+from django.shortcuts import redirect
 import userProfiles
 from quiztest.models import *
 from quiztest.forms import QuizForm
@@ -63,6 +64,8 @@ def testing(request):
     return HttpResponse(template.render())
 
 def qSelect(request):
+    if not request.user.is_authenticated:
+        return redirect(f"{settings.LOGIN_URL}?next={request.path}")
     template = loader.get_template('userProfiles/quizSelection.html')
     return HttpResponse(template.render())
 
