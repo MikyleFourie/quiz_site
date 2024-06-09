@@ -115,33 +115,20 @@ class Session(models.Model):
     QuizType = models.CharField(max_length= 255, null=True)
 
 
-    
+#datetime for model session!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-   # @property
-    #def QuizType(self):
-     #   return self.QuizID.title
+#from datetime import datetime
 
-    #session = Session.objects.get(id=1)  # get a Book instance
-    #QuizType = session.author.name
+# Create a new session
+#new_session = Session(
+  #  QuizID=quiz,
+   # Participants=['John', 'Jane'],
+    #UserScores=[10, 15],
+    #QuizType='Multiple Choice',
+    #session_time=datetime.now()  # Set the session time to the current date and time
+
+#new_session.save()
 
 
+ #session_time = models.DateTimeField()
 
-
-
-
-
-#CODE CAN BE IGNORED BELOW:
-
-#class Updated(models.Model):
-
-    #date_updated = models.DateTimeField(
-        #verbose_name=_("Last Updated"), auto_now=True)
-
-    #class Meta:
-   #     abstract = True
-    
-
-    #date_created = models.DateTimeField(
-        #auto_now_add=True, verbose_name=_("Date Created"), default='timezone.now')
-    #is_active = models.BooleanField(
-        #default=False, verbose_name=_("Active Status"))
