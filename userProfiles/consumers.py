@@ -81,7 +81,11 @@ class QuizConsumer(AsyncWebsocketConsumer):
         await self.load_initial_game_state()
 
         # Start the quiz if the required number of users are connected
-        if QuizConsumer.total_users == QuizConsumer.maxUsers:
+        #if QuizConsumer.total_users > QuizConsumer.maxUsers:
+            #QuizConsumer.total_users -= 1
+          #  await self.close()
+
+        if QuizConsumer.total_users >= QuizConsumer.maxUsers:
             print("SESSION IS CLOSED NOW")
             await self.close_session()
             await self.broadcast_game_state()
