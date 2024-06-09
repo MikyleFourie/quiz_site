@@ -10,9 +10,10 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('register/', views.register, name="register"),
     path('qSelect/', views.qSelect, name='quizSelect'),
-    #path('quiz/', views.quiz, name="quizScreen"),
-    path('quiz/<str:title>/', views.quiz, name="quizScreen"),
-    path('leaderboard/', views.leaderboard, name="leaderboard")
+    # path('quiz/<str:title>/', views.quiz, name="quizScreen"),
+    path('quiz/<str:title>/<int:session_id>/', views.quiz, name="quizScreen"),
+    path('leaderboard/', views.leaderboard, name="leaderboard"),
+    path('available_sessions/<str:quiz_type>/', views.available_sessions, name="available_sessions"),
     
     # path('signup2/', views.register2, name='pleaseWork')
 ]

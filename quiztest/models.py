@@ -2,6 +2,11 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
+from django.contrib import admin
+
+MAX_PARTICIPANTS = 4
+
+
 
 class Category(models.Model):
 
@@ -100,7 +105,7 @@ class Leaderboard(models.Model):
     
 
 class Session(models.Model):
-    
+    #Change MAX_PARTICIPANTS constant at the top to change how many players per session
     class Meta:
         verbose_name = _("Session")
         verbose_name_plural = _("Sessions")
@@ -108,11 +113,21 @@ class Session(models.Model):
 
 
     QuizID = models.ForeignKey(Quizzes, on_delete=models.CASCADE)
-    
     Participants = ArrayField(models.CharField(max_length=255, blank=True))
     UserScores = ArrayField(models.IntegerField(blank=True))
-
     QuizType = models.CharField(max_length= 255, null=True)
+    QuizStatus = models.CharField(max_length= 255, null=True, default='OPEN')
+    #QuizStatus should ONLY be OPEN or CLOSED
+
+    def add_participant(self, username):
+        if len(self.Participants) < MAX_PARTICIPANTS:
+            self.Participants.append(username)
+            self.save()
+            return True
+        return False
+    
+    def is_full(self):
+        return len(self.Participants) >= MAX_PARTICIPANTS;    
 
 
 #datetime for model session!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -132,3 +147,31 @@ class Session(models.Model):
 
  #session_time = models.DateTimeField()
 
+   # @property
+    #def QuizType(self):
+     #   return self.QuizID.title
+
+    #session = Session.objects.get(id=1)  # get a Book instance
+    #QuizType = session.author.name
+
+
+
+
+
+
+
+#CODE CAN BE IGNORED BELOW:
+
+#class Updated(models.Model):
+
+    #date_updated = models.DateTimeField(
+        #verbose_name=_("Last Updated"), auto_now=True)
+
+    #class Meta:
+   #     abstract = True
+    
+
+    #date_created = models.DateTimeField(
+        #auto_now_add=True, verbose_name=_("Date Created"), default='timezone.now')
+    #is_active = models.BooleanField(
+        #default=False, verbose_name=_("Active Status"))

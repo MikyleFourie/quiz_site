@@ -2,7 +2,7 @@ from re import template
 import random
 from django import http
 import django
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.forms import UserCreationForm
@@ -66,21 +66,51 @@ def qSelect(request):
     template = loader.get_template('userProfiles/quizSelection.html')
     return HttpResponse(template.render())
 
-def quiz(request, title):
-    
-    quiz = Quizzes.objects.get(title=title)
-    questions = list(quiz.question.all())
-    question_ids = random.sample([q.id for q in questions], 10)
+def quiz(request, title, session_id):
+    quiz = get_object_or_404(Quizzes, title=title)
+    # Try to get the session with the provided session_id
+    session = get_object_or_404(Session, id=session_id)
 
-    request.session['question_ids'] = question_ids
-    # request.session['current_question_index'] = 0
-    # request.session['score'] = 0
-    
-    context = {
-        'quiz_title': title,
-    }
-    
+    # If session doesn't exist, create a new one
+    if not session:
+        session = Session.objects.create(QuizID=quiz, QuizType=title, Participants=[], UserScores=[])
+
+    # Add current user to the session
+    if session.add_participant(request.user.username):
+        #request.session['session_id'] = session.id
+        question_ids = random.sample([q.id for q in quiz.question.all()], 10)
+        request.session['question_ids'] = question_ids
+
+        context = {
+            'quiz_title': title,
+            'session_id': session_id
+        }
+    else:
+        return redirect('quizSelect')
+
     return render(request, 'userProfiles/quiz.html', context)
+
+    # #Try find first available session
+    # session = Session.objects.filter(QuizID=quiz, QuizType=title).exclude(Participants__len=MAX_PARTICIPANTS).first()
+    # if not session:
+    #     #Create a new session if no others are available
+    #     session = Session.objects.create(QuizID=quiz, QuizType=title, Participants=[], UserScores=[])
+
+    # #Add current user to the session
+    # if session.add_participant(request.user.username):
+    #     request.session['session_id'] = session.id
+    #     question_ids = random.sample([q.id for q in quiz.question.all()], 10)
+    #     request.session['question_ids'] = question_ids
+
+    #     context = {
+    #         'quiz_title': title,
+    #         'session_id': session.id
+    #     }
+    # else:
+    #     return redirect('quizSelect') #not sure if this line works
+    
+    # return render(request, 'userProfiles/quiz.html', context)
+
 
 def leaderboard(request):
 
@@ -107,78 +137,26 @@ def leaderboard(request):
     # Render the template with the context
     return render(request, 'userProfiles/leaderboard.html', context)
 
-
-
-
-
-#class QuizView(View):
-    # def get(self, request, *args, **kwargs):
-    #     quiz = Quizzes.objects.get(title=kwargs['title'])
-    #     questions = list(quiz.question.all())
-
-    #     # Check if we need to start a new quiz
-    #     if 'question_ids' not in request.session:
-    #         question_ids = [q.id for q in questions]
-    #         random.shuffle(question_ids)
-    #         request.session['question_ids'] = question_ids
-    #         request.session['current_question_index'] = 0
-    #         request.session['score'] = 0
-    #     else:
-    #         question_ids = request.session['question_ids']
-    #         current_question_index = request.session['current_question_index']
-
-    #     # Get the current question
-    #     current_question_index = request.session['current_question_index']
-    #     current_question_id = question_ids[current_question_index]
-    #     current_question = Question.objects.get(id=current_question_id)
-
-    #     form = QuizForm(question=current_question)
-        # return render(request, 'quiz/quiz.html', {
-        #     'form': form,
-        #     'quiz': quiz,
-        #     'question_number': current_question_index + 1,
-        #     'total_questions': len(question_ids)
-        # })
-
-    # def post(self, request, *args, **kwargs):
-    #     quiz = Quizzes.objects.get(title=kwargs['title'])
-    #     question_ids = request.session['question_ids']
-    #     current_question_index = request.session['current_question_index']
-    #     current_question_id = question_ids[current_question_index]
-    #     current_question = Question.objects.get(id=current_question_id)
-
-    #     form = QuizForm(request.POST, question=current_question)
-
-    #     if form.is_valid():
-    #         correct_answer = current_question.answer.filter(is_right=True).first()
-    #         user_answer_id = form.cleaned_data[f'question_{current_question.id}']
-    #         if str(correct_answer.id) == user_answer_id:
-    #             request.session['score'] += 1
-
-    #         # Move to the next question
-    #         request.session['current_question_index'] += 1
-    #         if request.session['current_question_index'] >= len(question_ids):
-    #             score = request.session['score']
-    #             total = len(question_ids)
-    #             context = {
-    #                 'score': score,
-    #                 'total': total,
-    #                 'quiz': quiz,
-    #             }
-    #             # Clear session data
-    #             del request.session['question_ids']
-    #             del request.session['current_question_index']
-    #             del request.session['score']
-        #         return render(request, 'quiz/result.html', context)
-        #     else:
-        #         return redirect('quiztest:quiz', title=quiz.title)
-        
-        # print(form.errors)
-        # return render(request, 'quiz/quiz.html', {
-        #     'form': form,
-        #     'quiz': quiz,
-        #     'question_number': current_question_index + 1,
-        #     'total_questions': len(question_ids)
-        # })
+def available_sessions(request, quiz_type):
+    quiz = get_object_or_404(Quizzes, title=quiz_type)
+    # Retrieve available sessions for the selected quiz type
+    available_sessions = Session.objects.filter(QuizType=quiz_type)
     
-    
+    all_closed = all(session.QuizStatus == 'CLOSED' for session in available_sessions)
+    if all_closed:
+        new_session = Session.objects.create(QuizID=quiz, QuizType=quiz_type, Participants=[], UserScores=[])
+        next_session_id = new_session.id
+    else:
+        next_session_id = available_sessions.last().id + 1 if available_sessions.exists() else 1
+
+
+
+    # Prepare context to pass to the template
+    context = {
+        'quiz_type': quiz_type,
+        'available_sessions': available_sessions,
+        'all_closed': all_closed,
+        'next_session_id': next_session_id,
+    }
+
+    return render(request, 'userProfiles/available_sessions.html', context)

@@ -1,15 +1,11 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    const pathParts = window.location.pathname.split('/');
-    const quizTitle = pathParts[pathParts.length - 2]; // Assuming URL ends with quiz/<title>/
 
     // Get the protocol of the current window
     const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 
     // Construct the WebSocket URL
-    //const quizSocket = new WebSocket('ws://' + window.location.host + '/ws/quiz/'+ quizTitle + '/');
-    //const quizSocket = new WebSocket(  'wss://' + window.location.host + '/wss/quiz/' + quizTitle + '/');
     //has to match with:                wss://ppg-quiz-site-265ccf6f2c38.herokuapp.com/wss/quiz/Art/
-    const quizSocket = new WebSocket(protocol + window.location.host + '/ws/quiz/' + quizTitle + '/');
+    const quizSocket = new WebSocket(protocol + window.location.host + '/ws/quiz/' + quizTitle + '/' + sessionId + '/');
 
 
     //Get all HTML containers we need to manipulate
@@ -19,7 +15,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const answers_ul_element = document.getElementById('answers-list');
     const user_ul_element = document.getElementById('user_list');
     const numOfUsers_element = document.getElementById('numOfUsers');
+    //Difficulty rating element
+    
+
     const timer_element = document.getElementById('timer-count');
+    const timer_div_element = document.getElementById('timer');
 
     let timer;
     let timeLeft;
@@ -37,10 +37,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
 
         if (data.type === 'user_selection') {
+            console.log("user picked an answer");
             handleUserSelection(data.username);
         }
 
         if (data.type === 'quiz_end') {
+            console.log("caught the quiz end message");
             endQuiz(data.final_scores);
         }
     };
@@ -94,27 +96,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
         user_ul_element.innerHTML = '';
         users.forEach((user) => {
             const li = document.createElement('li');
+            li.setAttribute("id", `username-${user.username}`);
             li.innerText = `${user.username}: ${user.score}`;
             user_ul_element.appendChild(li);
         });
     }
 
     function handleUserSelection(username) {
-        const user_li_element = document.querySelector(`#user_list li[data-username="${username}"]`);
-        if (user_li_element) {
-            user_li_element.classList.add('answered');
+        const usernameElement = document.getElementById(`username-${username}`);
+        if (usernameElement) {
+            usernameElement.classList.add('chosen');
         }
     }
 
     function endQuiz(final_scores) {
         clearInterval(timer);
+        timer_div_element.innerText = '';
         question_text_element.innerText = 'Quiz Finished!';
         answers_ul_element.innerHTML = '';
 
         final_scores.forEach((user) => {
             const li = document.createElement('li');
             li.innerText = `${user.username}: ${user.score}`;
-            user_ul_element.appendChild(li);
+            answers_ul_element.appendChild(li);
         });
     }
 });

@@ -1,0 +1,42 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Available Quiz Sessions
+{% endblock %}
+
+{% block content %}
+<div class="mycard3">
+    <h1>Select an Available Quiz Session</h1>
+    {% if all_closed %}
+    <p>All sessions for this quiz are closed. Please reload the page</p>
+
+    {% comment %}
+    <a href="{% url 'quizScreen' title=quiz_type session_id=next_session_id %}">Create a New Session: {{next_session_id}}</a>
+    {% endcomment %}
+
+    {% else %}
+    <p>There are open sessions.</p>
+    {% endif %}
+    <ul>
+        {% for session in available_sessions %}
+        <li>
+            Session {{ session.id }} |
+            {{ session.QuizStatus }} |
+            Participants:
+            {% if session.Participants %}
+            {{ session.Participants|join:", " }}
+            {% else %}
+            None
+            {% endif %} |
+
+            {% if session.QuizStatus == 'OPEN' %}
+            <a href="{% url 'quizScreen' title=quiz_type session_id=session.id %}">Join</a>
+            {% endif %}
+        </li>
+        {% empty %}
+        <li>No available sessions.</li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}
