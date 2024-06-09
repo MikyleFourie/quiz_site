@@ -1,7 +1,9 @@
 from django.contrib import admin
 from . import models
 
-
+#all models are registered for the admin's page. 
+#the list_filter allows the admin to filter the databases
+#The search_fields attribute allows you to define which fields on the model should be searched when you use the search box at the top of the admin change list page.
 
 @admin.register(models.Category)
 

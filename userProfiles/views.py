@@ -86,19 +86,20 @@ def leaderboard(request):
 
     # Get the highest score for each user
     highest_scores = Leaderboard.objects.values('user__username').annotate(max_score=Max('score'))
-    print(Leaderboard.objects.all().values())
+   
 
     # Now `highest_scores` contains a queryset with each user's highest score
-    # You can iterate through it to access user IDs and their corresponding highest scores
+    #A list called leaderboard is created to store the username and corresponding high score
     leaderboard = []
+    # For Loop iterates through it to access user IDs and their corresponding highest scores
     for entry in highest_scores:
         user= entry['user__username']
         highest_score = entry['max_score']
-        leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)
-        leaderboard.append({'username': user, 'highest_score': highest_score})
+        leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)#the list is sorted so that the highest score of all the users is at the top
+        leaderboard.append({'username': user, 'highest_score': highest_score})#list is appended
 
 
-    # Pass the leaderboard data to the template
+    # Pass the leaderboard list to the template
     context = {
         'leaderboard':leaderboard
         }

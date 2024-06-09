@@ -378,7 +378,7 @@ a:link, a:visited {
     width: 20%;
 }
 
-
+/*CSS for the leaderboard*/
 .leaderboardcard {
     background-color: #f1f1f1;
     background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
