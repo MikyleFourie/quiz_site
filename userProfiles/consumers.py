@@ -124,7 +124,14 @@ class QuizConsumer(AsyncWebsocketConsumer):
         if self.answer_id:
             selected_answer = Answer.objects.get(id=self.answer_id)
             if selected_answer.is_right:
-                self.score += 1 #score increases by 1...for future purposes this will be modified to consider the difficulty level of the question and add the corresponding score 
+                # Retrieve the difficulty level of the question
+                question = selected_answer.question
+                if question.difficulty == 1:  # Beginner
+                    self.score += 0.5
+                elif question.difficulty == 2:  # Intermediate
+                    self.score += 1
+                elif question.difficulty == 3:  # Advanced
+                    self.score += 1.5
         self.answer_id = None
 
     async def process_user_answers(self, move_to_next_question=False):
