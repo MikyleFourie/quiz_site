@@ -23,7 +23,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
     total_users = 0
     users_completed = 0
     #global game_state
-    #user_scores = {}
+    user_scores = {}
     game_state = {
         'current_question': 0,
         'quizType': '',
@@ -209,7 +209,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
         if leaderboard_entry.score < self.score:
             leaderboard_entry.score = self.score
             leaderboard_entry.save()
-        
+
         
 
     async def end_quiz(self):
