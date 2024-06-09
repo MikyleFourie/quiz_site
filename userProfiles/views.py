@@ -127,7 +127,8 @@ def leaderboard(request):
         highest_score = entry['max_score']
         leaderboard.append({'username': user, 'highest_score': highest_score})#list is appended
 
-    leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)#the list is sorted so that the highest score of all the users is at the top
+    #the list is sorted after the iteration so that most recent entry is accounted for. User with the highest score overall sits at the top 
+    leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)
     # Pass the leaderboard list to the template
     context = {
         'leaderboard':leaderboard
