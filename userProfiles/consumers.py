@@ -120,7 +120,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
         if self.answer_id:
             selected_answer = Answer.objects.get(id=self.answer_id)
             if selected_answer.is_right:
-                self.score += 1
+                self.score += 1 #score increases by 1...for future purposes this will be modified to consider the difficulty level of the question and add the corresponding score 
         self.answer_id = None
 
     async def process_user_answers(self, move_to_next_question=False):
@@ -178,7 +178,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
     def update_score_in_db(self):
         # Update the user's score in the leaderboard
         leaderboard_entry, created = Leaderboard.objects.get_or_create(user=self.scope['user'])
-        if leaderboard_entry.score < self.score:
+        if leaderboard_entry.score < self.score: #checks that the current score from that session is greater than the user's previous highest score and updates accordingly 
             leaderboard_entry.score = self.score
             leaderboard_entry.save()
 
@@ -209,7 +209,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
         for consumer in QuizConsumer.connected_users.values():
             await consumer.send(text_data=json.dumps(message))
             
-        await self.update_score_in_db()
+        await self.update_score_in_db() #leaderboard updated at the end of the quiz 
 
     async def broadcast_user_list(self):
         # Broadcast the list of users and their scores

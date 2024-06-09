@@ -7,7 +7,7 @@ from django.contrib import admin
 MAX_PARTICIPANTS = 4
 
 
-
+#category model is for future purposes when users can play a randomized quiz (it will be a bridge to pull random questions from all the quizzes)
 class Category(models.Model):
 
     name = models.CharField(max_length=255, null=True)
@@ -28,14 +28,14 @@ class Quizzes(models.Model):
         "New Quiz"), verbose_name=_("Quiz Title"))
     
     category = models.ForeignKey(
-        Category, default=1, on_delete=models.PROTECT)#references category model
+        Category, default=1, on_delete=models.PROTECT)#references category model, the models.PROTECT prevents deletion of the referenced object
     
 
     def __str__(self):
         return self.title
 
 
-
+#the scale and type fields make use of django choices which allows the fields to have options. the choices are defined as iterables
 class Question(models.Model):
 
     class Meta:
@@ -44,7 +44,7 @@ class Question(models.Model):
         ordering = ['id']
 
     SCALE = (
-        (1, _('Beginner')),
+        (1, _('Beginner')), #the value on the left is the actual value in the database, the string on the right is for readability purposes 
         (2, _('Intermediate')),
         (3, _('Advanced')),
 
@@ -92,7 +92,7 @@ class Answer(models.Model):
     def __str__(self):
         return self.answer_text 
     
-
+#leaderboard model has a user and score attribute 
 class Leaderboard(models.Model):
     class Meta:
         verbose_name = _("Leaderboard")
@@ -113,7 +113,7 @@ class Session(models.Model):
 
 
     QuizID = models.ForeignKey(Quizzes, on_delete=models.CASCADE)
-    Participants = ArrayField(models.CharField(max_length=255, blank=True))
+    Participants = ArrayField(models.CharField(max_length=255, blank=True)) #participants and userscores are array fields (this can only be done because postgres functionality allows it, sqlite does not support arrays)
     UserScores = ArrayField(models.IntegerField(blank=True))
     QuizType = models.CharField(max_length= 255, null=True)
     QuizStatus = models.CharField(max_length= 255, null=True, default='OPEN')
@@ -158,22 +158,3 @@ class Session(models.Model):
 
 
 
-
-
-
-
-#CODE CAN BE IGNORED BELOW:
-
-#class Updated(models.Model):
-
-    #date_updated = models.DateTimeField(
-        #verbose_name=_("Last Updated"), auto_now=True)
-
-    #class Meta:
-   #     abstract = True
-    
-
-    #date_created = models.DateTimeField(
-        #auto_now_add=True, verbose_name=_("Date Created"), default='timezone.now')
-    #is_active = models.BooleanField(
-        #default=False, verbose_name=_("Active Status"))
