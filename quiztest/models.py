@@ -130,6 +130,23 @@ class Session(models.Model):
         return len(self.Participants) >= MAX_PARTICIPANTS;    
 
 
+#datetime for model session!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+#from datetime import datetime
+
+# Create a new session
+#new_session = Session(
+  #  QuizID=quiz,
+   # Participants=['John', 'Jane'],
+    #UserScores=[10, 15],
+    #QuizType='Multiple Choice',
+    #session_time=datetime.now()  # Set the session time to the current date and time
+
+#new_session.save()
+
+
+ #session_time = models.DateTimeField()
+
    # @property
     #def QuizType(self):
      #   return self.QuizID.title

@@ -235,9 +235,11 @@ class QuizConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def update_score_in_db(self):
-        leaderboard_entry, created = Leaderboard.objects.get_or_create(user=self.scope["user"])
-        leaderboard_entry.score = self.score
-        leaderboard_entry.save()
+        leaderboard_entry, created = Leaderboard.objects.get_or_create(user=self.scope['user'])
+        print(leaderboard_entry.score)
+        if leaderboard_entry.score < self.score:
+            leaderboard_entry.score = self.score
+            leaderboard_entry.save()
 
     @sync_to_async
     def update_game_state(self):
