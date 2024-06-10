@@ -60,7 +60,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
         else:
             await self.process_user_answers()
 
-    async def connect(self):
+    async def connect(self): #handles user connections to game session
         self.room_group_name = "quiz_group"
         self.username = self.scope["user"].username
         self.session_id = self.scope["url_route"]["kwargs"]["session_id"]
@@ -82,10 +82,6 @@ class QuizConsumer(AsyncWebsocketConsumer):
         await self.accept()
         await self.load_initial_game_state()
 
-        # Start the quiz if the required number of users are connected
-        #if QuizConsumer.total_users > QuizConsumer.maxUsers:
-            #QuizConsumer.total_users -= 1
-          #  await self.close()
 
         if QuizConsumer.total_users >= QuizConsumer.maxUsers:
             print("SESSION IS CLOSED NOW")
@@ -96,7 +92,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
                 print("timer on connect")
                 QuizConsumer.timer_task = asyncio.create_task(self.start_timer())
 
-    async def disconnect(self, close_code):
+    async def disconnect(self, close_code): #when users disconnect from game session
         if self.username in QuizConsumer.connected_users:
             del QuizConsumer.connected_users[self.username]
         QuizConsumer.total_users -= 1
@@ -106,7 +102,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
         if QuizConsumer.total_users == 0:
             await self.end_quiz()
 
-    async def receive(self, text_data):
+    async def receive(self, text_data):#receiving data from  json 
         text_data_json = json.loads(text_data)
         user_action = text_data_json.get("type")
 

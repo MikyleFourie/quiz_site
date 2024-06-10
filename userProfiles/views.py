@@ -16,24 +16,7 @@ import userProfiles
 from quiztest.models import *
 from quiztest.forms import QuizForm
 
-# This is a single View. Sort of like a class. for now its called view1
-# def view1(request):
-    
-#     myusers = Users.objects.all().values()
-#     template = loader.get_template('userProfiles/all_users.html')
-#     context = {
-#         'myusers': myusers,
-#         }
 
-#     return HttpResponse(template.render(context, request))
-
-# def details(request, id):
-#     myusers = Users.objects.get(id=id)
-#     template = loader.get_template('userProfiles/details.html')
-#     context = {
-#         'myusers': myusers,
-#         }
-#     return HttpResponse(template.render(context, request))
 
 def main(request):
     template = loader.get_template('userProfiles/main.html')
@@ -94,26 +77,7 @@ def quiz(request, title, session_id):
 
     return render(request, 'userProfiles/quiz.html', context)
 
-    # #Try find first available session
-    # session = Session.objects.filter(QuizID=quiz, QuizType=title).exclude(Participants__len=MAX_PARTICIPANTS).first()
-    # if not session:
-    #     #Create a new session if no others are available
-    #     session = Session.objects.create(QuizID=quiz, QuizType=title, Participants=[], UserScores=[])
-
-    # #Add current user to the session
-    # if session.add_participant(request.user.username):
-    #     request.session['session_id'] = session.id
-    #     question_ids = random.sample([q.id for q in quiz.question.all()], 10)
-    #     request.session['question_ids'] = question_ids
-
-    #     context = {
-    #         'quiz_title': title,
-    #         'session_id': session.id
-    #     }
-    # else:
-    #     return redirect('quizSelect') #not sure if this line works
-    
-    # return render(request, 'userProfiles/quiz.html', context)
+   
 
 
 def leaderboard(request):
@@ -121,7 +85,6 @@ def leaderboard(request):
     # Get the highest score for each user
     highest_scores = list(Leaderboard.objects.values('user__username').annotate(max_score=Max('score')))
    
-
     # Now `highest_scores` contains a queryset with each user's highest score
     #A list called leaderboard is created to store the username and corresponding high score
     leaderboard = []
@@ -131,8 +94,14 @@ def leaderboard(request):
         highest_score = entry['max_score']
         leaderboard.append({'username': user, 'highest_score': highest_score})#list is appended
 
+    #try catch error handling in case something is wrong with the sort    
+    try:
+        leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)
+    except Exception as e:
+            print("Exception during sorting:", e)
+
     #the list is sorted after the iteration so that most recent entry is accounted for. User with the highest score overall sits at the top 
-    leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)
+    #leaderboard.sort(key=lambda entry: entry['highest_score'], reverse=True)
 
     # Calculate the rank for each user
     rank = 0
@@ -142,7 +111,6 @@ def leaderboard(request):
             rank +=1
             prev_score = entry['highest_score']
         entry['rank'] = rank
-
 
 
     # Pass the leaderboard list to the template
