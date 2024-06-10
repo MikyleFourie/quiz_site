@@ -20,6 +20,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
         "question": {},
         "answers": {},
         "numOfUsers": 0,
+        "ques_diff": "",
     }
     timer_task = None
     all_answers_received = False
@@ -42,6 +43,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
         QuizConsumer.game_state["numOfUsers"] = QuizConsumer.total_users
         QuizConsumer.game_state["current_question"] = 0
         QuizConsumer.game_state["question"] = question_title
+        QuizConsumer.game_state["ques_diff"] = question.difficulty
         QuizConsumer.game_state["answers"] = answers_list
 
     async def broadcast_game_state(self):
@@ -183,6 +185,7 @@ class QuizConsumer(AsyncWebsocketConsumer):
 
         QuizConsumer.game_state["numOfUsers"] = QuizConsumer.total_users
         QuizConsumer.game_state["question"] = question_title
+        QuizConsumer.game_state["ques_diff"] = question.difficulty
         QuizConsumer.game_state["answers"] = answers_list
 
     @database_sync_to_async

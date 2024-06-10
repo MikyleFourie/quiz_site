@@ -22,7 +22,7 @@
     </div>
 
     <div class="quizCard {% if quiz_title == 'Art' %}art{% elif quiz_title == 'Science' %}science{% elif quiz_title == 'History' %}history{% elif quiz_title == 'Sport' %}sport{% elif quiz_title == 'Geography' %}geography{% elif quiz_title == 'Entertainment' %}entertainment{% endif %}">
-        <h2>Q <span id="current-question">0</span>/10 - <span id="quiz-type">{{ quiz_title }}</span></h2>
+        <h2>Q <span id="current-question">0</span>/10 - <span id="quiz-type">{{ quiz_title }}</span> - Difficulty: <span id="ques-diff"></span></h2>
         <h1 id="question-text">Waiting for Players...</h1>
         
         <ul class="q" id="answers-list"></ul>

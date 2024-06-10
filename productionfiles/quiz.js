@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //Get all HTML containers we need to manipulate
     const current_question_num_element = document.getElementById('current-question');
     const current_quiz_type_element = document.getElementById('quiz-type');
+    const current_ques_diff_element = document.getElementById('ques-diff');
     const question_text_element = document.getElementById('question-text');
     const answers_ul_element = document.getElementById('answers-list');
     const user_ul_element = document.getElementById('user_list');
@@ -59,6 +60,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         current_quiz_type_element.innerText = gameState.quizType;
         question_text_element.innerText = gameState.question;
         numOfUsers_element.innerText = gameState.numOfUsers;
+
+        if (gameState.ques_diff == 1) {
+            current_ques_diff_element.innerText = "Easy";
+        } else if (gameState.ques_diff == 2) {
+            current_ques_diff_element.innerText = "Intermediate";
+        } else {
+            current_ques_diff_element.innerText = "Hard";
+        }
+         
 
         // Clear the answers list
         answers_ul_element.innerHTML = '';

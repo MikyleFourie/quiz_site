@@ -17,23 +17,23 @@ from quiztest.models import *
 from quiztest.forms import QuizForm
 
 # This is a single View. Sort of like a class. for now its called view1
-def view1(request):
+# def view1(request):
     
-    myusers = Users.objects.all().values()
-    template = loader.get_template('userProfiles/all_users.html')
-    context = {
-        'myusers': myusers,
-        }
+#     myusers = Users.objects.all().values()
+#     template = loader.get_template('userProfiles/all_users.html')
+#     context = {
+#         'myusers': myusers,
+#         }
 
-    return HttpResponse(template.render(context, request))
+#     return HttpResponse(template.render(context, request))
 
-def details(request, id):
-    myusers = Users.objects.get(id=id)
-    template = loader.get_template('userProfiles/details.html')
-    context = {
-        'myusers': myusers,
-        }
-    return HttpResponse(template.render(context, request))
+# def details(request, id):
+#     myusers = Users.objects.get(id=id)
+#     template = loader.get_template('userProfiles/details.html')
+#     context = {
+#         'myusers': myusers,
+#         }
+#     return HttpResponse(template.render(context, request))
 
 def main(request):
     template = loader.get_template('userProfiles/main.html')
